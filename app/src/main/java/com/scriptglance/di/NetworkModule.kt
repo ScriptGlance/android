@@ -3,7 +3,7 @@ package com.scriptglance.di
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.scriptglance.data.remote.ApiService
-import com.scriptglance.utils.API_BASE_URL
+import com.scriptglance.utils.constants.API_BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

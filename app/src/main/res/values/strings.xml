@@ -1,3 +1,47 @@
 <resources>
     <string name="app_name">ScriptGlance</string>
+    <string name="logo">Логотип</string>
+    <string name="login">Вхід</string>
+    <string name="password">Пароль</string>
+    <string name="forgot_password">Забули пароль?</string>
+    <string name="no_account">Немає акаунту?</string>
+    <string name="registration">Реєстрація</string>
+    <string name="or">Або</string>
+    <string name="hide">Приховати</string>
+    <string name="show">Показати</string>
+    <string name="email_error">Введіть коректний email</string>
+    <string name="error_invalid_credentials">Невірний email або пароль</string>
+    <string name="error_email_duplicate">Користувач з таким email вже існує</string>
+    <string name="error_invalid_reset_password_token">Недійсний токен скидання пароля</string>
+    <string name="error_invalid_email_verification_code">Недійсний код підтвердження email</string>
+    <string name="error_email_not_verified">Пошта не підтверджена. Перевірте email</string>
+    <string name="error_email_already_verified">Email вже підтверджено</string>
+    <string name="error_email_verification_code_not_expired">Код підтвердження ще діє. Перевірте пошту</string>
+    <string name="error_password_reset_token_not_expired">Вже є активний токен для скидання пароля</string>
+    <string name="error">Сталася помилка</string>
+    <string name="google_client_id" translatable="false">322802098403-o0ct7moetmr5kcu2bfbi2fhhrfjttnrs.apps.googleusercontent.com</string>
+    <string name="facebook_app_id" translatable="false">1299026601171795</string>
+    <string name="facebook_client_token" translatable="false">048a26584f51675129e4cbc761d71463</string>
+    <string name="password_mismatch">Паролі не збігаються</string>
+    <string name="already_registered">Вже зареєстровані?</string>
+    <string name="name">Ім\'я</string>
+    <string name="surname">Прізвище</string>
+    <string name="email">Email</string>
+    <string name="repeat_password">Повторіть пароль</string>
+    <string name="extract_account">Створити акаунт</string>
+    <string name="error_title">Помилка</string>
+    <string name="ok">OK</string>
+    <string name="email_confirmation">Підтвердження email</string>
+    <string name="enter_email_confirmation_code">Введіть код підтвердження, надісланий на %1$s</string>
+    <string name="incorrect_code">Неправильний код</string>
+    <string name="incorrect_code_and_retry">Неправильний код, спробуйте ще раз.</string>
+    <string name="retry_after">Надіслати повторно через %1$s</string>
+    <string name="resend">Надіслати повторно</string>
+    <string name="change_email">Змінити пошту</string>
+    <string name="password_too_short">Пароль надто короткий</string>
+    <string name="forgot_password_description">Введіть вашу електронну пошту, і ми надішлемо інструкції для відновлення паролю</string>
+    <string name="restore_password">Відновити пароль</string>
+    <string name="return_to_login">← Повернутися до входу</string>
+    <string name="reset_email_sent">На пошту було надіслано лист із посиланням для відновлення паролю</string>
+    <string name="success">Успіх</string>
 </resources>
