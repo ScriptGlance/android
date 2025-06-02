@@ -49,8 +49,8 @@ fun parseErrorCode(json: String?): Pair<Int?, String?> {
 }
 
 suspend inline fun <reified T> apiFlow(
+    noinline onSuccess: suspend (T?) -> Unit = {},
     noinline apiCall: suspend () -> Response<ApiResponse<T?>>,
-    noinline onSuccess: suspend (T?) -> Unit = {}
 ): ApiResult<T?> {
     val rawResult = safeApiCall(apiCall)
     val parsed: ApiResult<T?> = when (rawResult) {

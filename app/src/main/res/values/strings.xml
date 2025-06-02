@@ -44,4 +44,68 @@
     <string name="return_to_login">← Повернутися до входу</string>
     <string name="reset_email_sent">На пошту було надіслано лист із посиланням для відновлення паролю</string>
     <string name="success">Успіх</string>
+    <string name="greeting_user_placeholder">Користувач</string>
+    <string name="greeting_format">Вітаю, %1$s!</string>
+    <string name="dashboard_manage_presentations">Керуйте своїми виступами.</string>
+    <string name="dashboard_create_presentation_button">Створити виступ</string>
+    <string name="dashboard_avatar_content_description">Аватар користувача</string>
+    <string name="dashboard_logo_content_description">Логотип ScriptGlance</string>
+    <string name="dashboard_illustration_content_description">Ілюстрація панелі керування</string>
+
+    <string name="stat_total_presentations">Всього виступів</string>
+    <string name="stat_invited_participants">Запрошено учасників</string>
+    <string name="stat_recordings_made">Зроблено записів</string>
+    <string name="stat_default_value">—</string>
+
+    <string name="search_presentations_placeholder">Пошук виступів</string>
+    <string name="filters_icon_content_description">Фільтри</string>
+
+    <string name="sort_tab_recent">Останні</string>
+    <string name="sort_tab_alphabetical">За алфавітом</string>
+    <string name="sort_tab_newest">Найновіші</string>
+    <string name="sort_tab_by_participants">За учасниками</string>
+
+    <string name="no_presentations_found">Виступів не знайдено</string>
+    <string name="loading_text">Завантаження…</string>
+    <string name="presentation_list_item_icon_description">Іконка виступу</string>
+    <string name="presentation_no_name">Виступ без назви</string>
+    <string name="presentation_shared_info_format">Спільний виступ · %1$d учасників</string>
+    <string name="presentation_individual_info">Індивідуальний виступ</string>
+    <string name="presentation_last_modified_label">Остання зміна:</string>
+    <string name="presentation_owner_avatar_description">Аватар власника</string>
+    <string name="date_format_fallback">—</string>
+    <string name="filters_dialog_title">Фільтри виступів</string>
+    <string name="filter_type_label">Тип виступу</string>
+    <string name="filter_presentation_type_individual">Індивідуальний</string>
+    <string name="filter_presentation_type_group">Груповий</string>
+    <string name="filter_presentation_type_all_types">Всі типи</string>
+
+    <string name="filter_last_change_label">Остання зміна виступу</string>
+    <string name="filter_last_change_today">Сьогодні</string>
+    <string name="filter_last_change_last_week">За останній тиждень</string>
+    <string name="filter_last_change_last_month">За останній місяць</string>
+    <string name="filter_last_change_last_year">За останній рік</string>
+    <string name="filter_last_change_all_time">За весь час</string>
+
+    <string name="filter_owner_label">Власник виступу</string>
+    <string name="filter_owner_type_me">Мої</string>
+    <string name="filter_owner_type_others">Інших авторів</string>
+    <string name="filter_owner_type_all_authors">Всі автори</string>
+
+    <string name="button_apply">Застосувати</string>
+    <string name="button_cancel">Скасувати</string>
+    <string name="button_close">Закрити</string>
+
+    <string name="edit_profile_dialog_title">Редагувати профіль</string>
+    <string name="edit_profile_first_name_label">Ім\'я</string>
+    <string name="edit_profile_last_name_label">Прізвище</string>
+    <string name="edit_profile_password_label">Новий пароль (залиште порожнім, щоб не змінювати)</string>
+    <string name="edit_profile_upload_avatar_description">Завантажити новий аватар</string>
+    <string name="edit_profile_save_button">Зберегти</string>
+    <string name="edit_profile_saving_button">Збереження…</string>
+    <string name="edit_profile_success_message">Профіль успішно оновлено</string>
+    <string name="edit_profile_error_message">Помилка оновлення профілю: %1$s</string>
+    <string name="edit_profile_error_generic">Не вдалося оновити профіль</string>
+    <string name="field_cannot_be_empty">Поле не може бути порожнім</string>
+
 </resources>
