@@ -74,4 +74,5 @@ dependencies {
     releaseImplementation(libs.chucker.no.op)
     implementation(libs.google.signin)
     implementation(libs.facebook.login)
+    implementation(libs.glide.compose)
 }
