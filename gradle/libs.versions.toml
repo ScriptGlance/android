@@ -1,5 +1,5 @@
 [versions]
-agp = "8.9.3"
+agp = "8.6.0"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -14,6 +14,8 @@ retrofit = "2.11.0"
 gson = "2.10.1"
 datastore = "1.1.7"
 chucker = "4.0.0"
+glideCompose = "1.0.0-beta01"
+socketIo = "2.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +41,11 @@ retrofit-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref 
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 chucker = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
 chucker-no-op = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
+androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+google-signin = { group = "com.google.android.gms", name = "play-services-auth", version = "21.1.0" }
+facebook-login = { group = "com.facebook.android", name = "facebook-login", version = "latest.release" }
+glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glideCompose" }
+socket-io = { group = "io.socket", name = "socket.io-client", version.ref = "socketIo" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
