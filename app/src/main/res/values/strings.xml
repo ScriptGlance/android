@@ -1,3 +1,165 @@
 <resources>
     <string name="app_name">ScriptGlance</string>
+    <string name="logo">Логотип</string>
+    <string name="login">Вхід</string>
+    <string name="password">Пароль</string>
+    <string name="forgot_password">Забули пароль?</string>
+    <string name="no_account">Немає акаунту?</string>
+    <string name="registration">Реєстрація</string>
+    <string name="or">Або</string>
+    <string name="hide">Приховати</string>
+    <string name="show">Показати</string>
+    <string name="email_error">Введіть коректний email</string>
+    <string name="error_invalid_credentials">Невірний email або пароль</string>
+    <string name="error_email_duplicate">Користувач з таким email вже існує</string>
+    <string name="error_invalid_reset_password_token">Недійсний токен скидання пароля</string>
+    <string name="error_invalid_email_verification_code">Недійсний код підтвердження email</string>
+    <string name="error_email_not_verified">Пошта не підтверджена. Перевірте email</string>
+    <string name="error_email_already_verified">Email вже підтверджено</string>
+    <string name="error_email_verification_code_not_expired">Код підтвердження ще діє. Перевірте пошту</string>
+    <string name="error_password_reset_token_not_expired">Вже є активний токен для скидання пароля</string>
+    <string name="error">Сталася помилка</string>
+    <string name="google_client_id" translatable="false">322802098403-o0ct7moetmr5kcu2bfbi2fhhrfjttnrs.apps.googleusercontent.com</string>
+    <string name="facebook_app_id" translatable="false">1299026601171795</string>
+    <string name="facebook_client_token" translatable="false">048a26584f51675129e4cbc761d71463</string>
+    <string name="password_mismatch">Паролі не збігаються</string>
+    <string name="already_registered">Вже зареєстровані?</string>
+    <string name="name">Ім\'я</string>
+    <string name="surname">Прізвище</string>
+    <string name="email">Email</string>
+    <string name="repeat_password">Повторіть пароль</string>
+    <string name="extract_account">Створити акаунт</string>
+    <string name="error_title">Помилка</string>
+    <string name="ok">OK</string>
+    <string name="email_confirmation">Підтвердження email</string>
+    <string name="enter_email_confirmation_code">Введіть код підтвердження, надісланий на %1$s</string>
+    <string name="incorrect_code">Неправильний код</string>
+    <string name="incorrect_code_and_retry">Неправильний код, спробуйте ще раз.</string>
+    <string name="retry_after">Надіслати повторно через %1$s</string>
+    <string name="resend">Надіслати повторно</string>
+    <string name="change_email">Змінити пошту</string>
+    <string name="password_too_short">Пароль надто короткий</string>
+    <string name="forgot_password_description">Введіть вашу електронну пошту, і ми надішлемо інструкції для відновлення паролю</string>
+    <string name="restore_password">Відновити пароль</string>
+    <string name="return_to_login">← Повернутися до входу</string>
+    <string name="reset_email_sent">На пошту було надіслано лист із посиланням для відновлення паролю</string>
+    <string name="success">Успіх</string>
+    <string name="greeting_user_placeholder">Користувач</string>
+    <string name="greeting_format">Вітаю, %1$s!</string>
+    <string name="dashboard_manage_presentations">Керуйте своїми виступами.</string>
+    <string name="dashboard_create_presentation_button">Створити виступ</string>
+    <string name="dashboard_avatar_content_description">Аватар користувача</string>
+    <string name="dashboard_logo_content_description">Логотип ScriptGlance</string>
+    <string name="dashboard_illustration_content_description">Ілюстрація панелі керування</string>
+
+    <string name="stat_total_presentations">Всього виступів</string>
+    <string name="stat_invited_participants">Запрошено учасників</string>
+    <string name="stat_recordings_made">Зроблено записів</string>
+    <string name="stat_default_value">—</string>
+
+    <string name="search_presentations_placeholder">Пошук виступів</string>
+    <string name="filters_icon_content_description">Фільтри</string>
+
+    <string name="sort_tab_recent">Останні</string>
+    <string name="sort_tab_alphabetical">За алфавітом</string>
+    <string name="sort_tab_newest">Найновіші</string>
+    <string name="sort_tab_by_participants">За учасниками</string>
+
+    <string name="no_presentations_found">Виступів не знайдено</string>
+    <string name="loading_text">Завантаження…</string>
+    <string name="presentation_list_item_icon_description">Іконка виступу</string>
+    <string name="presentation_no_name">Виступ без назви</string>
+    <string name="presentation_shared_info_format">Спільний виступ · %1$d учасників</string>
+    <string name="presentation_individual_info">Індивідуальний виступ</string>
+    <string name="presentation_last_modified_label">Остання зміна:</string>
+    <string name="presentation_owner_avatar_description">Аватар власника</string>
+    <string name="date_format_fallback">—</string>
+    <string name="filters_dialog_title">Фільтри виступів</string>
+    <string name="filter_type_label">Тип виступу</string>
+    <string name="filter_presentation_type_individual">Індивідуальний</string>
+    <string name="filter_presentation_type_group">Груповий</string>
+    <string name="filter_presentation_type_all_types">Всі типи</string>
+
+    <string name="filter_last_change_label">Остання зміна виступу</string>
+    <string name="filter_last_change_today">Сьогодні</string>
+    <string name="filter_last_change_last_week">За останній тиждень</string>
+    <string name="filter_last_change_last_month">За останній місяць</string>
+    <string name="filter_last_change_last_year">За останній рік</string>
+    <string name="filter_last_change_all_time">За весь час</string>
+
+    <string name="filter_owner_label">Власник виступу</string>
+    <string name="filter_owner_type_me">Мої</string>
+    <string name="filter_owner_type_others">Інших авторів</string>
+    <string name="filter_owner_type_all_authors">Всі автори</string>
+
+    <string name="button_apply">Застосувати</string>
+    <string name="button_cancel">Скасувати</string>
+    <string name="button_close">Закрити</string>
+
+    <string name="edit_profile_dialog_title">Редагувати профіль</string>
+    <string name="edit_profile_first_name_label">Ім\'я</string>
+    <string name="edit_profile_last_name_label">Прізвище</string>
+    <string name="edit_profile_password_label">Новий пароль (залиште порожнім, щоб не змінювати)</string>
+    <string name="edit_profile_upload_avatar_description">Завантажити новий аватар</string>
+    <string name="edit_profile_save_button">Зберегти</string>
+    <string name="edit_profile_saving_button">Збереження…</string>
+    <string name="edit_profile_success_message">Профіль успішно оновлено</string>
+    <string name="edit_profile_error_message">Помилка оновлення профілю: %1$s</string>
+    <string name="edit_profile_error_generic">Не вдалося оновити профіль</string>
+    <string name="field_cannot_be_empty">Поле не може бути порожнім</string>
+
+    <string name="back">Назад</string>
+    <string name="cancel">Скасувати</string>
+    <string name="close">Закрити</string>
+    <string name="save">Зберегти</string>
+    <string name="delete">Видалити</string>
+    <string name="later">Пізніше</string>
+    <string name="copy">Копіювати</string>
+
+    <string name="join">Приєднатися</string>
+    <string name="edit">Редагувати</string>
+    <string name="invite">Запросити</string>
+    <string name="participants">Учасники</string>
+    <string name="presentation_structure">Структура виступу</string>
+    <string name="created_at">Створено: %s</string>
+    <string name="last_modified">Остання зміна: %s</string>
+    <string name="presentation_type_individual">Індивідуальний</string>
+    <string name="presentation_type_group">Спільний</string>
+    <string name="owner">Власник</string>
+    <string name="participant">Учасник</string>
+    <string name="joined_presentation">У виступі</string>
+    <string name="part_title">Частина %d</string>
+    <string name="empty_structure_message">Тут з\'явиться зміст вашого виступу</string>
+
+    <string name="edit_title_modal_header">Редагувати назву</string>
+    <string name="presentation_title_placeholder">Назва презентації</string>
+    <string name="empty_title_error">Назва не може бути порожньою</string>
+
+    <string name="delete_modal_header">Видалення виступу</string>
+    <string name="delete_confirmation_message">Ви впевнені, що хочете видалити цей виступ?</string>
+    <string name="enter_name_to_confirm">Введіть назву виступу для підтвердження:</string>
+    <string name="enter_presentation_name">Введіть назву виступу</string>
+
+    <string name="invite_modal_header">Запросити учасника</string>
+    <string name="invite_instructions">Скопіюйте посилання та надішліть його потенційному учаснику</string>
+    <string name="link_copied">Посилання скопійовано</string>
+
+    <string name="premium_modal_header">Преміум функція</string>
+    <string name="premium_feature_description">Ця функція доступна тільки для преміум користувачів</string>
+    <string name="subscribe">Оформити підписку</string>
+
+    <plurals name="minutes">
+        <item quantity="one">хвилина</item>
+        <item quantity="few">хвилини</item>
+        <item quantity="many">хвилин</item>
+        <item quantity="other">хвилин</item>
+    </plurals>
+    <string name="less_than_minute">до хвилини</string>
+    <string name="minutes_range">~%1$d–%2$d %3$s</string>
+    <string name="minutes_single">~%1$d %2$s</string>
+    <string name="delete_participant_confirmation">Ви дійсно бажаєте видалити цього учасника?</string>
+    <string name="delete_participant_title">Видалити учасника?</string>
+    <string name="logout">Вихід</string>
+    <string name="logout_confirm_message">Ви точно хочете вийти з акаунту?</string>
+
 </resources>
