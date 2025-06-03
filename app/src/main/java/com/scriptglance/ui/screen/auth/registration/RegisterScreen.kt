@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.scriptglance.R
-import com.scriptglance.domain.manager.AuthSocialManager
+import com.scriptglance.domain.manager.auth.AuthSocialManager
 import com.scriptglance.ui.activity.MainActivity
 import com.scriptglance.ui.common.components.AppTextField
 import com.scriptglance.ui.common.components.BeigeButton

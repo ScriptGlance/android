@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -42,7 +43,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.bumptech.glide.integration.compose.placeholder
 import com.scriptglance.R
+import com.scriptglance.ui.common.components.AppButton
+import com.scriptglance.ui.common.components.AppTextField
+import com.scriptglance.ui.common.components.GrayButton
+import com.scriptglance.ui.common.components.GreenButton
 import com.scriptglance.ui.common.components.UserAvatar
 import com.scriptglance.ui.theme.Green3959
 import com.scriptglance.ui.theme.White
@@ -64,11 +70,6 @@ fun EditProfileDialog(
 
     LaunchedEffect(uiState.updateSuccess) {
         if (uiState.updateSuccess) {
-            Toast.makeText(
-                context,
-                context.getString(R.string.edit_profile_success_message),
-                Toast.LENGTH_SHORT
-            ).show()
             onProfileUpdated()
             onDismissRequest()
             viewModel.resetUpdateStatus()
@@ -94,14 +95,6 @@ fun EditProfileDialog(
         },
         containerColor = White,
         shape = RoundedCornerShape(28.dp),
-        title = {
-            Text(
-                text = stringResource(R.string.edit_profile_dialog_title),
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                color = Color.Black
-            )
-        },
         text = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 if (uiState.isLoadingInitialData) {
@@ -112,15 +105,14 @@ fun EditProfileDialog(
                             avatarUrl = if (uiState.selectedAvatarUri != null) null else uiState.currentAvatarUrl,
                             firstName = if (uiState.currentAvatarUrl == null) uiState.firstName else "",
                             lastName = if (uiState.currentAvatarUrl == null) uiState.lastName else "",
-                            size = 100.dp,
-                            contentDescription = stringResource(R.string.dashboard_avatar_content_description),
+                            size = 70.dp,
                             selectedLocalUri = uiState.selectedAvatarUri
                         )
 
                         IconButton(
                             onClick = { imagePickerLauncher.launch("image/*") },
                             modifier = Modifier
-                                .size(36.dp)
+                                .size(25.dp)
                                 .clip(CircleShape)
                                 .background(White)
                                 .padding(0.dp),
@@ -137,88 +129,37 @@ fun EditProfileDialog(
                         }
                     }
                     Spacer(Modifier.height(24.dp))
-                    EditProfileTextField(
+                    AppTextField(
                         value = uiState.firstName,
                         onValueChange = viewModel::onFirstNameChanged,
-                        label = stringResource(R.string.edit_profile_first_name_label)
+                        placeholder = stringResource(R.string.edit_profile_first_name_label)
                     )
                     Spacer(Modifier.height(16.dp))
-                    EditProfileTextField(
+                    AppTextField(
                         value = uiState.lastName,
                         onValueChange = viewModel::onLastNameChanged,
-                        label = stringResource(R.string.edit_profile_last_name_label)
+                        placeholder = stringResource(R.string.edit_profile_last_name_label)
                     )
                 }
             }
         },
         confirmButton = {
-            TextButton(
+            GreenButton(
                 onClick = { viewModel.saveProfile(context) },
                 enabled = !uiState.isUpdating && !uiState.isLoadingInitialData,
-                modifier = Modifier
-                    .fillMaxWidth(0.45f)
-                    .height(48.dp)
-                    .background(Green3959, RoundedCornerShape(12.dp)),
-                colors = ButtonDefaults.textButtonColors(contentColor = White)
-            ) {
-                if (uiState.isUpdating) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = White,
-                        strokeWidth = 2.dp
-                    )
-                } else {
-                    Text(
-                        stringResource(R.string.edit_profile_save_button),
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-            }
+                label = stringResource(R.string.edit_profile_save_button),
+            )
         },
         dismissButton = {
-            TextButton(
+            GrayButton(
                 onClick = onDismissRequest,
                 enabled = !uiState.isUpdating,
-                modifier = Modifier
-                    .fillMaxWidth(0.8f)
-                    .height(48.dp)
-                    .background(LightGray, RoundedCornerShape(12.dp)),
-                colors = ButtonDefaults.textButtonColors(contentColor = Color.DarkGray)
-            ) {
-                Text(stringResource(R.string.button_cancel), fontWeight = FontWeight.Medium)
-            }
+                label = stringResource(R.string.button_cancel),
+            )
         },
         properties = androidx.compose.ui.window.DialogProperties(usePlatformDefaultWidth = false),
         modifier = Modifier
             .fillMaxWidth(0.9f)
             .padding(16.dp)
-    )
-}
-
-
-@Composable
-private fun EditProfileTextField(
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    isPassword: Boolean = false
-) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(label) },
-        modifier = Modifier.fillMaxWidth(),
-        singleLine = true,
-        shape = RoundedCornerShape(12.dp),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Green3959,
-            unfocusedBorderColor = Color.Gray.copy(alpha = 0.5f),
-            focusedLabelColor = Green3959,
-            cursorColor = Green3959,
-            focusedContainerColor = White,
-            unfocusedContainerColor = White,
-            disabledContainerColor = White,
-        ),
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else androidx.compose.ui.text.input.VisualTransformation.None
     )
 }

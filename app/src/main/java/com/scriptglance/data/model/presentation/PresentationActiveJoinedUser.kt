@@ -1,6 +1,6 @@
 package com.scriptglance.data.model.presentation
 
 data class PresentationActiveJoinedUser(
-    val userId: Long,
+    val userId: Int,
     val isRecordingModeActive: Boolean
 )

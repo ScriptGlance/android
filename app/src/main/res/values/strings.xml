@@ -108,4 +108,56 @@
     <string name="edit_profile_error_generic">Не вдалося оновити профіль</string>
     <string name="field_cannot_be_empty">Поле не може бути порожнім</string>
 
+    <string name="back">Назад</string>
+    <string name="cancel">Скасувати</string>
+    <string name="close">Закрити</string>
+    <string name="save">Зберегти</string>
+    <string name="delete">Видалити</string>
+    <string name="later">Пізніше</string>
+    <string name="copy">Копіювати</string>
+
+    <string name="join">Приєднатися</string>
+    <string name="edit">Редагувати</string>
+    <string name="invite">Запросити</string>
+    <string name="participants">Учасники</string>
+    <string name="presentation_structure">Структура виступу</string>
+    <string name="created_at">Створено: %s</string>
+    <string name="last_modified">Остання зміна: %s</string>
+    <string name="presentation_type_individual">Індивідуальний</string>
+    <string name="presentation_type_group">Спільний</string>
+    <string name="owner">Власник</string>
+    <string name="participant">Учасник</string>
+    <string name="joined_presentation">У виступі</string>
+    <string name="part_title">Частина %d</string>
+    <string name="empty_structure_message">Тут з\'явиться зміст вашого виступу</string>
+
+    <string name="edit_title_modal_header">Редагувати назву</string>
+    <string name="presentation_title_placeholder">Назва презентації</string>
+    <string name="empty_title_error">Назва не може бути порожньою</string>
+
+    <string name="delete_modal_header">Видалення виступу</string>
+    <string name="delete_confirmation_message">Ви впевнені, що хочете видалити цей виступ?</string>
+    <string name="enter_name_to_confirm">Введіть назву виступу для підтвердження:</string>
+    <string name="enter_presentation_name">Введіть назву виступу</string>
+
+    <string name="invite_modal_header">Запросити учасника</string>
+    <string name="invite_instructions">Скопіюйте посилання та надішліть його потенційному учаснику</string>
+    <string name="link_copied">Посилання скопійовано</string>
+
+    <string name="premium_modal_header">Преміум функція</string>
+    <string name="premium_feature_description">Ця функція доступна тільки для преміум користувачів</string>
+    <string name="subscribe">Оформити підписку</string>
+
+    <plurals name="minutes">
+        <item quantity="one">хвилина</item>
+        <item quantity="few">хвилини</item>
+        <item quantity="many">хвилин</item>
+        <item quantity="other">хвилин</item>
+    </plurals>
+    <string name="less_than_minute">до хвилини</string>
+    <string name="minutes_range">~%1$d–%2$d %3$s</string>
+    <string name="minutes_single">~%1$d %2$s</string>
+    <string name="delete_participant_confirmation">Ви дійсно бажаєте видалити цього учасника?</string>
+    <string name="delete_participant_title">Видалити учасника?</string>
+
 </resources>

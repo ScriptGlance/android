@@ -1,6 +1,7 @@
 package com.scriptglance.data.model.presentation
 
 import com.google.gson.annotations.SerializedName
+import com.scriptglance.data.model.profile.User
 
 data class PresentationPart(
     @SerializedName("part_name")
@@ -11,5 +12,5 @@ data class PresentationPart(
     val wordsCount: Int,
     @SerializedName("text_preview")
     val textPreview: String,
-    val assignee: PresentationOwner
+    val assignee: User
 )

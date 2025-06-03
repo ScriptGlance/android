@@ -19,7 +19,7 @@ import com.scriptglance.data.model.presentation.PresentationStats
 import com.scriptglance.data.model.presentation.PresentationStructure
 import com.scriptglance.data.model.presentation.PresentationsConfig
 import com.scriptglance.data.model.presentation.UpdatePresentationRequest
-import com.scriptglance.data.model.profile.UserProfile
+import com.scriptglance.data.model.profile.User
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -36,33 +36,33 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ApiService {
-    @POST("/auth/login")
+    @POST("api/auth/login")
     suspend fun login(@Body body: LoginRequest): Response<ApiResponse<TokenResponse?>>
 
-    @POST("/auth/register")
+    @POST("api/auth/register")
     suspend fun register(@Body body: RegisterRequest): Response<ApiResponse<TokenResponse?>>
 
-    @POST("/auth/mobile-social-login")
+    @POST("api/auth/mobile-social-login")
     suspend fun mobileSocialLogin(@Body body: MobileSocialLoginRequest): Response<ApiResponse<TokenResponse?>>
 
-    @POST("/auth/send-verification-email")
+    @POST("api/auth/send-verification-email")
     suspend fun sendVerificationEmail(@Body body: SendVerificationEmailRequest): Response<ApiResponse<Unit?>>
 
-    @POST("/auth/verify-email")
+    @POST("api/auth/verify-email")
     suspend fun verifyEmail(@Body body: VerifyEmailRequest): Response<ApiResponse<Unit?>>
 
-    @POST("/auth/forgot-password")
+    @POST("api/auth/forgot-password")
     suspend fun forgotPassword(@Body body: ForgotPasswordRequest): Response<ApiResponse<Unit?>>
 
-    @POST("/auth/reset-password")
+    @POST("api/auth/reset-password")
     suspend fun resetPassword(@Body body: ResetPasswordRequest): Response<ApiResponse<Unit?>>
 
-    @GET("/presentations/stats")
+    @GET("api/presentations/stats")
     suspend fun getStats(
         @Header("Authorization") token: String
     ): Response<ApiResponse<PresentationStats?>>
 
-    @GET("/presentations")
+    @GET("api/presentations")
     suspend fun getPresentations(
         @Header("Authorization") token: String,
         @Query("limit") limit: Int? = null,
@@ -75,80 +75,80 @@ interface ApiService {
     ): Response<ApiResponse<List<PresentationItem>?>>
 
 
-    @POST("/presentations")
+    @POST("api/presentations")
     suspend fun createPresentation(
         @Header("Authorization") token: String
     ): Response<ApiResponse<Presentation?>>
 
-    @GET("/presentations/{id}")
+    @GET("api/presentations/{id}")
     suspend fun getPresentation(
         @Header("Authorization") token: String,
-        @Path("id") id: Long
+        @Path("id") id: Int
     ): Response<ApiResponse<Presentation?>>
 
-    @PUT("/presentations/{id}")
+    @PUT("api/presentations/{id}")
     suspend fun updatePresentationName(
         @Header("Authorization") token: String,
-        @Path("id") id: Long,
+        @Path("id") id: Int,
         @Body body: UpdatePresentationRequest
     ): Response<ApiResponse<Presentation?>>
 
-    @DELETE("/presentations/{id}")
+    @DELETE("api/presentations/{id}")
     suspend fun deletePresentation(
         @Header("Authorization") token: String,
-        @Path("id") id: Long
-    ): Response<ApiResponse<Unit?>>
+        @Path("id") id: Int
+    ): Response<Unit>
 
-    @GET("/presentations/{presentationId}/participants")
+    @GET("api/presentations/{presentationId}/participants")
     suspend fun getParticipants(
         @Header("Authorization") token: String,
-        @Path("presentationId") presentationId: Long
+        @Path("presentationId") presentationId: Int
     ): Response<ApiResponse<List<Participant>?>>
 
 
-    @DELETE("/presentations/participants/{participantId}")
+    @DELETE("api/presentations/participants/{participantId}")
     suspend fun deleteParticipant(
         @Header("Authorization") token: String,
-        @Path("participantId") participantId: Long
+        @Path("participantId") participantId: Int
     ): Response<ApiResponse<Unit?>>
 
-    @POST("/presentations/{presentationId}/invite")
+    @POST("api/presentations/{presentationId}/invite")
     suspend fun inviteParticipant(
         @Header("Authorization") token: String,
-        @Path("presentationId") presentationId: Long
+        @Path("presentationId") presentationId: Int
     ): Response<ApiResponse<InvitationResponse?>>
 
-    @POST("/presentations/invitations/{invitationToken}/accept")
+    @POST("api/presentations/invitations/{invitationToken}/accept")
     suspend fun acceptInvitation(
         @Header("Authorization") token: String,
         @Path("invitationToken") invitationToken: String
     ): Response<ApiResponse<AcceptInvitationsResponse?>>
 
-    @GET("/presentations/{id}/structure")
+    @GET("api/presentations/{id}/structure")
     suspend fun getPresentationStructure(
         @Header("Authorization") token: String,
-        @Path("id") id: Long
+        @Path("id") id: Int
     ): Response<ApiResponse<PresentationStructure?>>
 
-    @GET("/user/config")
+    @GET("api/user/config")
     suspend fun getConfig(
         @Header("Authorization") token: String
     ): Response<ApiResponse<PresentationsConfig?>>
 
-    @GET("/presentations/{presentationId}/active")
+    @GET("api/presentations/{presentationId}/active")
     suspend fun getActivePresentation(
         @Header("Authorization") token: String,
-        @Path("presentationId") presentationId: Long
+        @Path("presentationId") presentationId: Int
     ): Response<ApiResponse<PresentationActiveData?>>
 
-    @GET("/user/profile")
-    suspend fun getProfile(@Header("Authorization") token: String): Response<ApiResponse<UserProfile?>>
+    @GET("api/user/profile")
+    suspend fun getProfile(@Header("Authorization") token: String): Response<ApiResponse<User?>>
 
     @Multipart
-    @PUT("/user/profile")
+    @PUT("api/user/profile")
     suspend fun updateProfile(
         @Header("Authorization") token: String,
         @PartMap fields: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part parts: List<MultipartBody.Part>
-    ): Response<ApiResponse<UserProfile?>>
+    ): Response<ApiResponse<User?>>
 }

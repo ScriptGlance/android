@@ -18,7 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.scriptglance.utils.constants.API_BASE_URL
+import com.scriptglance.utils.constants.UPLOADS_BASE_URL
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -29,7 +29,6 @@ fun UserAvatar(
     firstName: String?,
     lastName: String?,
     size: Dp,
-    contentDescription: String,
     defaultBackgroundColor: Color = Color(0xFF5E7158),
     textColor: Color = Color.White
 ) {
@@ -41,9 +40,9 @@ fun UserAvatar(
                 if (it.startsWith("http://") || it.startsWith("https://")) {
                     it
                 } else {
-                    API_BASE_URL + it
+                    UPLOADS_BASE_URL + it.removePrefix("/")
                 }
-            } ?: null
+            }
         }
     }
 
@@ -80,7 +79,7 @@ fun UserAvatar(
         if (modelToLoad != null) {
             GlideImage(
                 model = modelToLoad,
-                contentDescription = contentDescription,
+                contentDescription = "$firstName $lastName",
                 modifier = Modifier
                     .size(size)
                     .clip(CircleShape),

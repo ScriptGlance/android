@@ -75,4 +75,5 @@ dependencies {
     implementation(libs.google.signin)
     implementation(libs.facebook.login)
     implementation(libs.glide.compose)
+    implementation(libs.socket.io)
 }

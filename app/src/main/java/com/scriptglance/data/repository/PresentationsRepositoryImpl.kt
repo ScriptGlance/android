@@ -15,6 +15,7 @@ import com.scriptglance.data.model.presentation.UpdatePresentationRequest
 import com.scriptglance.data.remote.ApiService
 import com.scriptglance.domain.repository.PresentationsRepository
 import com.scriptglance.utils.apiFlow
+import com.scriptglance.utils.safeApiCall
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,34 +33,34 @@ class PresentationsRepositoryImpl @Inject constructor(
     override suspend fun createPresentation(token: String): ApiResult<Presentation?> =
         apiFlow { apiService.createPresentation(bearer(token)) }
 
-    override suspend fun getPresentation(token: String, id: Long): ApiResult<Presentation?> =
+    override suspend fun getPresentation(token: String, id: Int): ApiResult<Presentation?> =
         apiFlow { apiService.getPresentation(bearer(token), id) }
 
-    override suspend fun updatePresentationName(token: String, id: Long, name: String): ApiResult<Presentation?> =
+    override suspend fun updatePresentationName(token: String, id: Int, name: String): ApiResult<Presentation?> =
         apiFlow { apiService.updatePresentationName(bearer(token), id, UpdatePresentationRequest(name)) }
 
-    override suspend fun deletePresentation(token: String, id: Long): ApiResult<Unit?> =
-        apiFlow { apiService.deletePresentation(bearer(token), id) }
+    override suspend fun deletePresentation(token: String, id: Int): ApiResult<Unit?> =
+        safeApiCall { apiService.deletePresentation(bearer(token), id) }
 
-    override suspend fun getParticipants(token: String, presentationId: Long): ApiResult<List<Participant>?> =
+    override suspend fun getParticipants(token: String, presentationId: Int): ApiResult<List<Participant>?> =
         apiFlow { apiService.getParticipants(bearer(token), presentationId) }
 
-    override suspend fun deleteParticipant(token: String, participantId: Long): ApiResult<Unit?> =
+    override suspend fun deleteParticipant(token: String, participantId: Int): ApiResult<Unit?> =
         apiFlow { apiService.deleteParticipant(bearer(token), participantId) }
 
-    override suspend fun inviteParticipant(token: String, presentationId: Long): ApiResult<InvitationResponse?> =
+    override suspend fun inviteParticipant(token: String, presentationId: Int): ApiResult<InvitationResponse?> =
         apiFlow { apiService.inviteParticipant(bearer(token), presentationId) }
 
     override suspend fun acceptInvitation(token: String, invitationToken: String): ApiResult<AcceptInvitationsResponse?> =
         apiFlow { apiService.acceptInvitation(bearer(token), invitationToken) }
 
-    override suspend fun getPresentationStructure(token: String, id: Long): ApiResult<PresentationStructure?> =
+    override suspend fun getPresentationStructure(token: String, id: Int): ApiResult<PresentationStructure?> =
         apiFlow { apiService.getPresentationStructure(bearer(token), id) }
 
     override suspend fun getConfig(token: String): ApiResult<PresentationsConfig?> =
         apiFlow { apiService.getConfig(bearer(token)) }
 
-    override suspend fun getActivePresentation(token: String, presentationId: Long): ApiResult<PresentationActiveData?> =
+    override suspend fun getActivePresentation(token: String, presentationId: Int): ApiResult<PresentationActiveData?> =
         apiFlow { apiService.getActivePresentation(bearer(token), presentationId) }
 
     private fun bearer(token: String) = "Bearer $token"

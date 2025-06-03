@@ -1,4 +1,4 @@
-package com.scriptglance.ui.screen.presentation
+package com.scriptglance.ui.screen.presentation.userDashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -49,9 +49,7 @@ class UserDashboardViewModel @Inject constructor(
             currentToken = authRepository.getToken()
             if (currentToken.isNullOrBlank()) {
                 _state.update { it.copy(isLoading = false, userProfile = null) }
-                return@launch
             }
-            fetchAll()
         }
     }
 
@@ -94,16 +92,15 @@ class UserDashboardViewModel @Inject constructor(
                 is ApiResult.Success -> _state.update {
                     it.copy(
                         stats = result.data
-                        // isLoading = false
                     )
                 }
-                is ApiResult.Error -> _state.update { it.copy(stats = null /*, isLoading = false */) }
+                is ApiResult.Error -> _state.update { it.copy(stats = null) }
             }
         }
     }
 
     fun refreshPresentations() {
-        _state.update { it.copy(presentations = emptyList(), offset = 0, canLoadMore = true, isLoading = false) } // Reset loading before new load
+        _state.update { it.copy(presentations = emptyList(), offset = 0, canLoadMore = true, isLoading = false) }
         loadMorePresentations()
     }
 
@@ -140,6 +137,21 @@ class UserDashboardViewModel @Inject constructor(
                 }
                 is ApiResult.Error -> _state.update {
                     it.copy(isLoading = false, canLoadMore = false)
+                }
+            }
+        }
+    }
+
+    fun createPresentation() {
+        viewModelScope.launch {
+            val token = currentToken ?: return@launch
+            val result = presentationsRepository.createPresentation(token)
+            when (result) {
+                is ApiResult.Success -> {
+                    _state.update { it.copy(createdPresentationId = result.data?.presentationId) }
+                }
+                is ApiResult.Error -> {
+                    _state.update { it.copy(isLoading = false) }
                 }
             }
         }
