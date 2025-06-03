@@ -159,5 +159,7 @@
     <string name="minutes_single">~%1$d %2$s</string>
     <string name="delete_participant_confirmation">Ви дійсно бажаєте видалити цього учасника?</string>
     <string name="delete_participant_title">Видалити учасника?</string>
+    <string name="logout">Вихід</string>
+    <string name="logout_confirm_message">Ви точно хочете вийти з акаунту?</string>
 
 </resources>

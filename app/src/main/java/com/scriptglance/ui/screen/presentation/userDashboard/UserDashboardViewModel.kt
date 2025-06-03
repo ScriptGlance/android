@@ -8,6 +8,7 @@ import com.scriptglance.domain.repository.AuthRepository
 import com.scriptglance.domain.repository.PresentationsRepository
 import com.scriptglance.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -214,5 +215,11 @@ class UserDashboardViewModel @Inject constructor(
             limit = state.limit,
             offset = state.offset
         )
+    }
+
+    fun logout() {
+        MainScope().launch {
+            authRepository.removeToken()
+        }
     }
 }
