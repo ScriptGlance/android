@@ -2,6 +2,7 @@ package com.scriptglance.ui.screen.presentation.userDashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -57,8 +58,11 @@ import com.scriptglance.R
 import com.scriptglance.data.model.presentation.PresentationItem
 import com.scriptglance.ui.common.components.AppTextField
 import com.scriptglance.ui.common.components.BeigeButton
+import com.scriptglance.ui.common.components.GrayButton
+import com.scriptglance.ui.common.components.RedButton
 import com.scriptglance.ui.common.components.UserAvatar
 import com.scriptglance.ui.screen.profile.EditProfileDialog
+import com.scriptglance.ui.theme.Black
 import com.scriptglance.ui.theme.RedEA
 import com.scriptglance.ui.theme.White
 import com.scriptglance.ui.theme.WhiteEA
@@ -67,12 +71,13 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun UserDashboardScreenRoot(
     onPresentationClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
+    onLogout: () -> Unit,
 ) {
     val viewModel: UserDashboardViewModel = hiltViewModel()
     val state by viewModel.state.collectAsState()
     var filtersDialogVisible by remember { mutableStateOf(false) }
     var editProfileDialogVisible by remember { mutableStateOf(false) }
+    var logoutDialogVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(state.createdPresentationId) {
         state.createdPresentationId?.let {
@@ -85,9 +90,11 @@ fun UserDashboardScreenRoot(
     }
 
 
-    Box(modifier = modifier
-        .fillMaxSize()
-        .background(WhiteEA)) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(WhiteEA)
+    ) {
         UserDashboardScreen(
             state = state,
             onPresentationClick = onPresentationClick,
@@ -97,6 +104,7 @@ fun UserDashboardScreenRoot(
             onSortChange = viewModel::onSortChange,
             onLoadMore = viewModel::loadMorePresentations,
             onCreatePresentation = viewModel::createPresentation,
+            onLogoutClick = { logoutDialogVisible = true },
         )
         if (filtersDialogVisible) {
             FiltersDialog(
@@ -119,6 +127,38 @@ fun UserDashboardScreenRoot(
                 }
             )
         }
+
+        if (logoutDialogVisible) {
+            AlertDialog(
+                onDismissRequest = { logoutDialogVisible = false },
+                text = {
+                    Text(
+                        stringResource(R.string.logout_confirm_message),
+                        fontWeight = FontWeight.Medium
+                    )
+                },
+                confirmButton = {
+                    RedButton(
+                        label = stringResource(R.string.logout),
+                        modifier = Modifier.fillMaxWidth(0.4f),
+                        onClick = {
+                            logoutDialogVisible = false
+                            viewModel.logout()
+                            onLogout()
+                        },
+                    )
+                },
+                dismissButton = {
+                    GrayButton(
+                        modifier = Modifier.fillMaxWidth(0.4f),
+                        label = stringResource(R.string.button_cancel),
+                        onClick = { logoutDialogVisible = false },
+                    )
+                },
+                containerColor = Color.White,
+                shape = RoundedCornerShape(20.dp)
+            )
+        }
     }
 }
 
@@ -132,6 +172,7 @@ fun UserDashboardScreen(
     onSearchQueryChange: (String) -> Unit,
     onSortChange: (PresentationSort) -> Unit,
     onLoadMore: () -> Unit,
+    onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val listState = rememberLazyListState()
@@ -200,18 +241,38 @@ fun UserDashboardScreen(
                             .padding(top = 16.dp),
                     )
                 }
-                UserAvatar(
-                    avatarUrl = state.userProfile?.avatar,
-                    firstName = state.userProfile?.firstName,
-                    lastName = state.userProfile?.lastName,
-                    size = 48.dp,
+
+                Row(
                     modifier = Modifier
                         .align(Alignment.TopEnd)
-                        .padding(end = 20.dp, top = 20.dp)
-                        .clickable { onEditProfileClick() }
-                )
+                        .padding(top = 20.dp, end = 20.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    UserAvatar(
+                        avatarUrl = state.userProfile?.avatar,
+                        firstName = state.userProfile?.firstName,
+                        lastName = state.userProfile?.lastName,
+                        size = 48.dp,
+                        modifier = Modifier.clickable { onEditProfileClick() }
+                    )
+                    Box(
+                        modifier = Modifier
+                            .size(40.dp)
+                            .background(Color.White, CircleShape)
+                            .clickable(onClick = onLogoutClick),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_logout),
+                            contentDescription = stringResource(R.string.logout),
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
+                }
             }
         }
+
 
         item {
             Row(
@@ -244,7 +305,8 @@ fun UserDashboardScreen(
                     icon = R.drawable.ic_video,
                     bg = Color(0xFFF1E8D6),
                     label = stringResource(R.string.stat_recordings_made),
-                    value = state.stats?.recordingsMade?.toString() ?: stringResource(R.string.stat_default_value)
+                    value = state.stats?.recordingsMade?.toString()
+                        ?: stringResource(R.string.stat_default_value)
                 )
                 Spacer(Modifier.width(4.dp))
             }
@@ -630,7 +692,8 @@ fun PresentationListItem(
             ) {
                 val ownerFirstName = presentation.owner.firstName
                 val ownerLastName = presentation.owner.lastName
-                val ownerNameDisplay = listOfNotNull(ownerFirstName, ownerLastName).joinToString(" ").trim()
+                val ownerNameDisplay =
+                    listOfNotNull(ownerFirstName, ownerLastName).joinToString(" ").trim()
 
 
                 if (ownerNameDisplay.isNotEmpty()) {

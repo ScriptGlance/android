@@ -21,6 +21,11 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                     navController.navigate(
                         MainRoutes.PresentationDetails.createRoute(it)
                     )
+                },
+                onLogout = {
+                    navController.navigate("auth") {
+                        popUpTo("main") { inclusive = true }
+                    }
                 }
             )
         }
