@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -32,11 +33,13 @@ fun SocialAuthButtons(
         horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterHorizontally)
     ) {
         SocialAuthButton(
+            modifier = Modifier.weight(1f),
             iconRes = R.drawable.ic_google,
             contentDescription = "Google",
             onClick = onGoogleClick
         )
         SocialAuthButton(
+            modifier = Modifier.weight(1f),
             iconRes = R.drawable.ic_facebook,
             contentDescription = "Facebook",
             onClick = onFacebookClick
@@ -46,12 +49,13 @@ fun SocialAuthButtons(
 
 @Composable
 private fun SocialAuthButton(
+    modifier: Modifier,
     iconRes: Int,
     contentDescription: String,
     onClick: () -> Unit
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .clip(RoundedCornerShape(12.dp))
             .background(Color.White)
             .border(
@@ -59,7 +63,7 @@ private fun SocialAuthButton(
                 color = WhiteE1,
                 shape = RoundedCornerShape(12.dp)
             )
-            .size(width = 140.dp, height = 44.dp)
+            .height(44.dp)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {
