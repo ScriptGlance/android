@@ -2,10 +2,10 @@ package com.scriptglance.data.model.profile
 
 import com.google.gson.annotations.SerializedName
 
-data class UserProfile(
+data class User(
     val avatar: String?,
     @SerializedName("user_id")
-    val userId: Long,
+    val userId: Int,
     @SerializedName("first_name")
     val firstName: String,
     @SerializedName("last_name")

@@ -1,4 +1,4 @@
-package com.scriptglance.ui.screen.presentation
+package com.scriptglance.ui.screen.presentation.userDashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -66,8 +66,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun UserDashboardScreenRoot(
-    onPresentationClick: (Long) -> Unit,
-    onCreatePresentation: () -> Unit,
+    onPresentationClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel: UserDashboardViewModel = hiltViewModel()
@@ -75,18 +74,29 @@ fun UserDashboardScreenRoot(
     var filtersDialogVisible by remember { mutableStateOf(false) }
     var editProfileDialogVisible by remember { mutableStateOf(false) }
 
+    LaunchedEffect(state.createdPresentationId) {
+        state.createdPresentationId?.let {
+            onPresentationClick(it)
+        }
+    }
+
+    LaunchedEffect(true) {
+        viewModel.onRefresh()
+    }
+
+
     Box(modifier = modifier
         .fillMaxSize()
         .background(WhiteEA)) {
         UserDashboardScreen(
             state = state,
-            onCreatePresentation = onCreatePresentation,
             onPresentationClick = onPresentationClick,
             onFiltersClick = { filtersDialogVisible = true },
             onEditProfileClick = { editProfileDialogVisible = true },
             onSearchQueryChange = viewModel::onSearchQueryChange,
             onSortChange = viewModel::onSortChange,
-            onLoadMore = viewModel::loadMorePresentations
+            onLoadMore = viewModel::loadMorePresentations,
+            onCreatePresentation = viewModel::createPresentation,
         )
         if (filtersDialogVisible) {
             FiltersDialog(
@@ -116,7 +126,7 @@ fun UserDashboardScreenRoot(
 fun UserDashboardScreen(
     state: UserDashboardState,
     onCreatePresentation: () -> Unit,
-    onPresentationClick: (Long) -> Unit,
+    onPresentationClick: (Int) -> Unit,
     onFiltersClick: () -> Unit,
     onEditProfileClick: () -> Unit,
     onSearchQueryChange: (String) -> Unit,
@@ -195,7 +205,6 @@ fun UserDashboardScreen(
                     firstName = state.userProfile?.firstName,
                     lastName = state.userProfile?.lastName,
                     size = 48.dp,
-                    contentDescription = stringResource(R.string.dashboard_avatar_content_description),
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .padding(end = 20.dp, top = 20.dp)
@@ -642,7 +651,6 @@ fun PresentationListItem(
                     firstName = ownerFirstName,
                     lastName = ownerLastName,
                     size = 30.dp,
-                    contentDescription = stringResource(R.string.presentation_owner_avatar_description)
                 )
             }
         }

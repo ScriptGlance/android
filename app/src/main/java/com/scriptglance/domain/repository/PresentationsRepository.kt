@@ -23,23 +23,23 @@ interface PresentationsRepository {
 
     suspend fun createPresentation(token: String): ApiResult<Presentation?>
 
-    suspend fun getPresentation(token: String, id: Long): ApiResult<Presentation?>
+    suspend fun getPresentation(token: String, id: Int): ApiResult<Presentation?>
 
     suspend fun updatePresentationName(
         token: String,
-        id: Long,
+        id: Int,
         name: String
     ): ApiResult<Presentation?>
 
-    suspend fun deletePresentation(token: String, id: Long): ApiResult<Unit?>
+    suspend fun deletePresentation(token: String, id: Int): ApiResult<Unit?>
 
-    suspend fun getParticipants(token: String, presentationId: Long): ApiResult<List<Participant>?>
+    suspend fun getParticipants(token: String, presentationId: Int): ApiResult<List<Participant>?>
 
-    suspend fun deleteParticipant(token: String, participantId: Long): ApiResult<Unit?>
+    suspend fun deleteParticipant(token: String, participantId: Int): ApiResult<Unit?>
 
     suspend fun inviteParticipant(
         token: String,
-        presentationId: Long
+        presentationId: Int
     ): ApiResult<InvitationResponse?>
 
     suspend fun acceptInvitation(
@@ -47,12 +47,12 @@ interface PresentationsRepository {
         invitationToken: String
     ): ApiResult<AcceptInvitationsResponse?>
 
-    suspend fun getPresentationStructure(token: String, id: Long): ApiResult<PresentationStructure?>
+    suspend fun getPresentationStructure(token: String, id: Int): ApiResult<PresentationStructure?>
 
     suspend fun getConfig(token: String): ApiResult<PresentationsConfig?>
 
     suspend fun getActivePresentation(
         token: String,
-        presentationId: Long
+        presentationId: Int
     ): ApiResult<PresentationActiveData?>
 }

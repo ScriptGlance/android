@@ -1,4 +1,4 @@
-package com.scriptglance.domain.manager
+package com.scriptglance.domain.manager.auth
 
 import android.app.Activity
 import android.content.Context
@@ -42,7 +42,7 @@ class AuthSocialManager(
     }
 
     fun launchFacebookSignIn(activity: Activity) {
-        LoginManager.getInstance()
+        LoginManager.Companion.getInstance()
             .logInWithReadPermissions(activity, listOf("email", "public_profile"))
     }
 
@@ -50,7 +50,7 @@ class AuthSocialManager(
         callbackManager: CallbackManager,
         onLoginSuccess: (String) -> Unit
     ) {
-        LoginManager.getInstance().registerCallback(
+        LoginManager.Companion.getInstance().registerCallback(
             callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(result: LoginResult) {

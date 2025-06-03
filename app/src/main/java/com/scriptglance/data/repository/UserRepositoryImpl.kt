@@ -1,7 +1,7 @@
 package com.scriptglance.data.repository
 
 import com.scriptglance.data.model.ApiResult
-import com.scriptglance.data.model.profile.UserProfile
+import com.scriptglance.data.model.profile.User
 import com.scriptglance.data.model.profile.UserProfileUpdateData
 import com.scriptglance.data.remote.ApiService
 import com.scriptglance.domain.repository.UserRepository
@@ -19,11 +19,11 @@ class UserRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : UserRepository {
 
-    override suspend fun getProfile(token: String): ApiResult<UserProfile?> {
-        return apiFlow<UserProfile>(apiCall = { apiService.getProfile("Bearer $token") })
+    override suspend fun getProfile(token: String): ApiResult<User?> {
+        return apiFlow<User>(apiCall = { apiService.getProfile("Bearer $token") })
     }
 
-    override suspend fun updateProfile(token: String, data: UserProfileUpdateData): ApiResult<UserProfile?> {
+    override suspend fun updateProfile(token: String, data: UserProfileUpdateData): ApiResult<User?> {
         val parts = mutableListOf<MultipartBody.Part>()
         val fields = mutableMapOf<String, RequestBody>()
 
