@@ -8,4 +8,7 @@ data class Participant(
     val participantId: Int,
     val color: String,
     val user: User
-)
+) {
+    val fullName: String
+        get() = "${user.firstName} ${user.lastName}"
+}

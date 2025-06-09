@@ -1,8 +1,8 @@
 package com.scriptglance.data.repository
 
 import com.scriptglance.data.local.AuthDataStore
-import com.scriptglance.data.model.ApiResult
-import com.scriptglance.data.model.MobileSocialLoginRequest
+import com.scriptglance.data.model.api.ApiResult
+import com.scriptglance.data.model.auth.MobileSocialLoginRequest
 import com.scriptglance.data.model.auth.*
 import com.scriptglance.data.remote.ApiService
 import com.scriptglance.domain.repository.AuthRepository

@@ -1,6 +1,6 @@
 package com.scriptglance.domain.repository
 
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.data.model.presentation.AcceptInvitationsResponse
 import com.scriptglance.data.model.presentation.GetPresentationsParams
 import com.scriptglance.data.model.presentation.InvitationResponse
@@ -11,6 +11,7 @@ import com.scriptglance.data.model.presentation.PresentationItem
 import com.scriptglance.data.model.presentation.PresentationStats
 import com.scriptglance.data.model.presentation.PresentationStructure
 import com.scriptglance.data.model.presentation.PresentationsConfig
+import com.scriptglance.data.model.teleprompter.PresentationPartFull
 
 interface PresentationsRepository {
 
@@ -55,4 +56,6 @@ interface PresentationsRepository {
         token: String,
         presentationId: Int
     ): ApiResult<PresentationActiveData?>
+
+    suspend fun getParts(token: String, presentationId: Int): ApiResult<List<PresentationPartFull>?>
 }

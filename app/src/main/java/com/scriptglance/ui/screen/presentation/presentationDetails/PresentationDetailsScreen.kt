@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -52,6 +53,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.graphics.toColorInt
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.scriptglance.R
 import com.scriptglance.data.model.presentation.JoinedUser
 import com.scriptglance.data.model.presentation.Participant
@@ -77,6 +81,8 @@ import com.scriptglance.ui.theme.Green5E
 import com.scriptglance.ui.theme.GreenD3
 import com.scriptglance.ui.theme.RedEA
 import com.scriptglance.ui.theme.WhiteEA
+import androidx.compose.runtime.DisposableEffect
+
 
 @Composable
 fun PresentationDetailsScreen(
@@ -92,10 +98,27 @@ fun PresentationDetailsScreen(
         }
     }
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+    DisposableEffect(lifecycleOwner) {
+        val observer = object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) {
+                super.onResume(owner)
+                viewModel.onScreenResumed()
+            }
+        }
+
+        lifecycleOwner.lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(WhiteEA)
+            .statusBarsPadding()
     ) {
         Column(
             modifier = Modifier

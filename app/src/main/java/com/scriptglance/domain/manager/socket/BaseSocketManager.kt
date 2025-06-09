@@ -189,6 +189,22 @@ abstract class BaseSocketManager(
     }
 
     fun onConnect(callback: () -> Unit): Emitter.Listener {
-        return onEvent("connect", Unit::class.java, callback = { callback() })
+        return onEmptyEvent("connect", callback)
+    }
+
+    protected fun onEmptyEvent(eventName: String, callback: () -> Unit): Emitter.Listener {
+        val listener = Emitter.Listener {
+            Log.d(TAG, "Received '$eventName' for $socketPath")
+            mainThreadHandler.post { callback() }
+        }
+
+        if (socket == null) {
+            Log.w(TAG, "Socket for $socketPath not initialized. Cannot set listener for '$eventName'.")
+            return Emitter.Listener {}
+        }
+
+        socket?.on(eventName, listener)
+        Log.d(TAG, "Subscribed to '$eventName' for $socketPath")
+        return listener
     }
 }

@@ -1,8 +1,7 @@
-package com.scriptglance.ui.screen.presentation.userDashboard
+package com.scriptglance.ui.screen.userDashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -62,7 +62,6 @@ import com.scriptglance.ui.common.components.GrayButton
 import com.scriptglance.ui.common.components.RedButton
 import com.scriptglance.ui.common.components.UserAvatar
 import com.scriptglance.ui.screen.profile.EditProfileDialog
-import com.scriptglance.ui.theme.Black
 import com.scriptglance.ui.theme.RedEA
 import com.scriptglance.ui.theme.White
 import com.scriptglance.ui.theme.WhiteEA
@@ -93,6 +92,7 @@ fun UserDashboardScreenRoot(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .statusBarsPadding()
             .background(WhiteEA)
     ) {
         UserDashboardScreen(

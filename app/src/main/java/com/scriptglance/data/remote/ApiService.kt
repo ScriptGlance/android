@@ -1,7 +1,7 @@
 package com.scriptglance.data.remote
 
-import com.scriptglance.data.model.ApiResponse
-import com.scriptglance.data.model.MobileSocialLoginRequest
+import com.scriptglance.data.model.api.ApiResponse
+import com.scriptglance.data.model.auth.MobileSocialLoginRequest
 import com.scriptglance.data.model.auth.ForgotPasswordRequest
 import com.scriptglance.data.model.auth.LoginRequest
 import com.scriptglance.data.model.auth.RegisterRequest
@@ -20,6 +20,11 @@ import com.scriptglance.data.model.presentation.PresentationStructure
 import com.scriptglance.data.model.presentation.PresentationsConfig
 import com.scriptglance.data.model.presentation.UpdatePresentationRequest
 import com.scriptglance.data.model.profile.User
+import com.scriptglance.data.model.teleprompter.ConfirmActiveReaderRequest
+import com.scriptglance.data.model.teleprompter.ParticipantVideoCount
+import com.scriptglance.data.model.teleprompter.PresentationPartFull
+import com.scriptglance.data.model.teleprompter.SetActiveReaderRequest
+import com.scriptglance.data.model.teleprompter.SetRecordingModeRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -151,4 +156,49 @@ interface ApiService {
         @PartMap fields: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part parts: List<MultipartBody.Part>
     ): Response<ApiResponse<User?>>
+
+    @POST("api/presentations/{presentationId}/start")
+    suspend fun startPresentation(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int
+    ): Response<Unit>
+
+    @POST("api/presentations/{presentationId}/stop")
+    suspend fun stopPresentation(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int
+    ): Response<Unit>
+
+    @PUT("api/presentations/{presentationId}/recording-mode")
+    suspend fun setRecordingMode(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int,
+        @Body request: SetRecordingModeRequest
+    ): Response<Unit>
+
+    @GET("api/presentations/{presentationId}/participants/videos-left")
+    suspend fun getParticipantsVideosLeft(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int
+    ): Response<ApiResponse<List<ParticipantVideoCount>?>>
+
+    @PUT("api/presentations/{presentationId}/active/reader")
+    suspend fun setActiveReader(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int,
+        @Body request: SetActiveReaderRequest
+    ): Response<Unit>
+
+    @POST("api/presentations/{presentationId}/active/reader/confirm")
+    suspend fun confirmActiveReader(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int,
+        @Body request: ConfirmActiveReaderRequest
+    ): Response<Unit>
+
+    @GET("api/presentations/{presentationId}/parts")
+    suspend fun getParts(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int
+    ): Response<ApiResponse<List<PresentationPartFull>?>>
 }

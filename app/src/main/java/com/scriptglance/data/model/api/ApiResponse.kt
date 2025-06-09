@@ -1,4 +1,4 @@
-package com.scriptglance.data.model
+package com.scriptglance.data.model.api
 
 import com.google.gson.annotations.SerializedName
 

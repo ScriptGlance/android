@@ -1,8 +1,8 @@
-package com.scriptglance.ui.screen.presentation.userDashboard
+package com.scriptglance.ui.screen.userDashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.data.model.presentation.GetPresentationsParams
 import com.scriptglance.domain.repository.AuthRepository
 import com.scriptglance.domain.repository.PresentationsRepository
