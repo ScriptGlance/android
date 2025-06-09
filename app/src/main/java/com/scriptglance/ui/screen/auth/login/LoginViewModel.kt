@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scriptglance.R
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.domain.callback.SocialAuthCallback
 import com.scriptglance.domain.repository.AuthRepository
 import com.scriptglance.utils.constants.ErrorCode

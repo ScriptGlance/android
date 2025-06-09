@@ -7,4 +7,9 @@ sealed class MainRoutes(val route: String) {
             return "presentation_details/$presentationId"
         }
     }
+    object Teleprompter : MainRoutes("presentation/{presentationId}/teleprompter") {
+        fun createRoute(presentationId: Int): String {
+            return "presentation/$presentationId/teleprompter"
+        }
+    }
 }

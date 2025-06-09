@@ -1,4 +1,4 @@
-package com.scriptglance.data.model
+package com.scriptglance.data.model.api
 
 sealed class ApiResult<out T> {
     data class Success<out T>(val data: T?) : ApiResult<T?>()

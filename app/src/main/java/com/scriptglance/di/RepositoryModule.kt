@@ -30,4 +30,10 @@ abstract class RepositoryModule {
     abstract fun bindUserRepository(
         impl: com.scriptglance.data.repository.UserRepositoryImpl
     ): com.scriptglance.domain.repository.UserRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTeleprompterRepository(
+        impl: com.scriptglance.data.repository.TeleprompterRepositoryImpl
+    ): com.scriptglance.domain.repository.TeleprompterRepository
 }

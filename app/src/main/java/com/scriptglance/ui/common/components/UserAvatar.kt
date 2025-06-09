@@ -2,6 +2,7 @@ package com.scriptglance.ui.common.components
 
 import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -16,6 +17,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.scriptglance.utils.constants.UPLOADS_BASE_URL
@@ -82,7 +84,8 @@ fun UserAvatar(
                 contentDescription = "$firstName $lastName",
                 modifier = Modifier
                     .size(size)
-                    .clip(CircleShape),
+                    .clip(CircleShape)
+                    .border(2.dp, defaultBackgroundColor, CircleShape),
                 contentScale = ContentScale.Crop,
             )
         } else {

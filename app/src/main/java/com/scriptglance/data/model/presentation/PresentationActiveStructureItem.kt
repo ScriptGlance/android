@@ -1,7 +1,7 @@
 package com.scriptglance.data.model.presentation
 
 data class PresentationActiveStructureItem(
-    val partId: Long,
+    val partId: Int,
     val partTextLength: Int,
-    val assigneeUserId: Long
+    val assigneeUserId: Int
 )
