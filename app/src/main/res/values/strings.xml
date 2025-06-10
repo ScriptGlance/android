@@ -255,5 +255,6 @@
     <string name="connection_error">Помилка з\'єднання</string>
     <string name="check_connection">Перевірте інтернет-з\'єднання та спробуйте знову</string>
     <string name="retry">Повторити</string>
+    <string name="notification_channel_name">Повідомлення</string>
 
 </resources>

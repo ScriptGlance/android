@@ -36,6 +36,9 @@ class UserRepositoryImpl @Inject constructor(
         data.password?.let {
             fields["password"] = it.toRequestBody("text/plain".toMediaTypeOrNull())
         }
+        data.fcmToken?.let {
+            fields["fcm_token"] = it.toRequestBody("text/plain".toMediaTypeOrNull())
+        }
         data.avatar?.let { file ->
             if (file.exists()) {
                 val reqFile = file.asRequestBody("image/*".toMediaTypeOrNull())
