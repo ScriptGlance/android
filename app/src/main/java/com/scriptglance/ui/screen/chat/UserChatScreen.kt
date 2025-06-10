@@ -80,6 +80,7 @@ fun UserChatScreen(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
+            .windowInsetsPadding(WindowInsets.ime)
             .background(Color(0xFFFBFAF6))
     ) {
         ChatHeader(onNavigateBack = onNavigateBack)
