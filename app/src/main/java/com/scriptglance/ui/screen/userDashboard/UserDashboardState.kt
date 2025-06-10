@@ -16,4 +16,5 @@ data class UserDashboardState(
     val offset: Int = 0,
     val canLoadMore: Boolean = true,
     val createdPresentationId: Int? = null,
+    val chatUnreadCount: Int = 0
 )

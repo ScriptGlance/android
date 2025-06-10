@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.scriptglance.ui.screen.chat.UserChatScreen
 import com.scriptglance.ui.screen.premium.management.PremiumManagementScreen
 import com.scriptglance.ui.screen.premium.purachase.PremiumPurchaseScreen
 import com.scriptglance.ui.screen.presentation.presentationDetails.PresentationDetailsScreen
@@ -30,6 +31,9 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                 },
                 onManageSubscriptionClick = {
                     navController.navigate(MainRoutes.PremiumManagement.route)
+                },
+                onChatClick = {
+                    navController.navigate(MainRoutes.Chat.route)
                 },
                 onLogout = {
                     navController.navigate("auth") {
@@ -84,6 +88,14 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                     navController.popBackStack()
                 }
             )
+        }
+
+        composable(MainRoutes.Chat.route) {
+             UserChatScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+             )
         }
     }
 }
