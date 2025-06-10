@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.data.model.presentation.GetPresentationsParams
+import com.scriptglance.data.model.profile.UserProfileUpdateData
 import com.scriptglance.domain.manager.socket.ChatSocketManager
 import com.scriptglance.domain.repository.AuthRepository
 import com.scriptglance.domain.repository.ChatRepository
@@ -282,6 +283,12 @@ class UserDashboardViewModel @Inject constructor(
 
     fun logout() {
         MainScope().launch {
+            currentToken?.let {
+                userRepository.updateProfile(
+                    it,
+                    UserProfileUpdateData(fcmToken = "")
+                )
+            }
             authRepository.removeToken()
         }
     }

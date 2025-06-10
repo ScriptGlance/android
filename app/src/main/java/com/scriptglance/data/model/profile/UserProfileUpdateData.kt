@@ -9,5 +9,7 @@ data class UserProfileUpdateData(
     val firstName: String? = null,
     @SerializedName("last_name")
     val lastName: String? = null,
-    val password: String? = null
+    val password: String? = null,
+    @SerializedName("fcm_token")
+    val fcmToken: String? = null,
 )
