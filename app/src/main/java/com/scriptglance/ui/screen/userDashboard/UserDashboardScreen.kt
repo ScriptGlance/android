@@ -34,6 +34,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -54,6 +55,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.scriptglance.R
 import com.scriptglance.data.model.presentation.PresentationItem
 import com.scriptglance.ui.common.components.AppTextField
@@ -73,6 +77,7 @@ fun UserDashboardScreenRoot(
     onPresentationClick: (Int) -> Unit,
     onPurchasePremiumClick: () -> Unit,
     onManageSubscriptionClick: () -> Unit,
+    onChatClick: () -> Unit,
     onLogout: () -> Unit,
 ) {
     val viewModel: UserDashboardViewModel = hiltViewModel()
@@ -81,14 +86,24 @@ fun UserDashboardScreenRoot(
     var editProfileDialogVisible by remember { mutableStateOf(false) }
     var logoutDialogVisible by remember { mutableStateOf(false) }
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.onScreenResumed()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     LaunchedEffect(state.createdPresentationId) {
         state.createdPresentationId?.let {
             onPresentationClick(it)
         }
-    }
-
-    LaunchedEffect(true) {
-        viewModel.onRefresh()
     }
 
 
@@ -109,6 +124,7 @@ fun UserDashboardScreenRoot(
             onCreatePresentation = viewModel::createPresentation,
             onPurchasePremiumClick = onPurchasePremiumClick,
             onManageSubscriptionClick = onManageSubscriptionClick,
+            onChatClick = onChatClick,
             onLogoutClick = { logoutDialogVisible = true },
         )
         if (filtersDialogVisible) {
@@ -179,6 +195,7 @@ fun UserDashboardScreen(
     onPurchasePremiumClick: () -> Unit,
     onManageSubscriptionClick: () -> Unit,
     onLoadMore: () -> Unit,
+    onChatClick: () -> Unit,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -229,7 +246,6 @@ fun UserDashboardScreen(
                         )
 
                         Spacer(modifier = Modifier.weight(1f))
-
                     }
                     Spacer(Modifier.height(10.dp))
 
@@ -238,7 +254,8 @@ fun UserDashboardScreen(
                             stringResource(R.string.manage_subscription)
                         } else {
                             stringResource(R.string.buy_premium)
-                        }, onClick = {
+                        },
+                        onClick = {
                             if (state.userProfile?.hasPremium == true) {
                                 onManageSubscriptionClick()
                             } else {
@@ -246,7 +263,6 @@ fun UserDashboardScreen(
                             }
                         }
                     )
-
 
                     Spacer(Modifier.height(24.dp))
                     Text(
@@ -279,13 +295,19 @@ fun UserDashboardScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
+                    ChatButton(
+                        unreadCount = state.chatUnreadCount,
+                        onClick = onChatClick
+                    )
+
                     UserAvatar(
                         avatarUrl = state.userProfile?.avatar,
                         firstName = state.userProfile?.firstName,
                         lastName = state.userProfile?.lastName,
-                        size = 48.dp,
+                        size = 40.dp,
                         modifier = Modifier.clickable { onEditProfileClick() }
                     )
+
                     Box(
                         modifier = Modifier
                             .size(40.dp)
@@ -745,6 +767,45 @@ fun PresentationListItem(
                     firstName = ownerFirstName,
                     lastName = ownerLastName,
                     size = 30.dp,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun ChatButton(
+    unreadCount: Int,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .size(40.dp)
+            .background(Color.White, CircleShape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_chat),
+            contentDescription = stringResource(R.string.support_chat),
+            modifier = Modifier.size(25.dp),
+            tint = Color.Unspecified
+        )
+
+        if (unreadCount > 0) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(18.dp)
+                    .background(RedEA, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = if (unreadCount > 99) "99+" else unreadCount.toString(),
+                    color = Color.White,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
                 )
             }
         }

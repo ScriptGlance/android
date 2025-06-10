@@ -243,4 +243,17 @@
     <string name="hours_minutes">%1$d г %2$d хв</string>
     <string name="minutes">%1$d хв</string>
 
+    <string name="support">Підтримка</string>
+    <string name="enter_message">Введіть повідомлення…</string>
+    <string name="send">Відправити</string>
+    <string name="loading">Завантаження…</string>
+    <string name="no_messages_yet">У вас ще немає повідомлень</string>
+    <string name="support_chat">Чат з підтримкою</string>
+
+    <string name="loading_more">Завантаження…</string>
+    <string name="loading_chat">Завантаження чату…</string>
+    <string name="connection_error">Помилка з\'єднання</string>
+    <string name="check_connection">Перевірте інтернет-з\'єднання та спробуйте знову</string>
+    <string name="retry">Повторити</string>
+
 </resources>
