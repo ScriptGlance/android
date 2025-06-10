@@ -1,6 +1,6 @@
 package com.scriptglance.data.model.presentation
 
 data class PresentationActiveCurrentReadingPosition(
-    val partId: Long,
+    val partId: Int,
     val position: Int
 )

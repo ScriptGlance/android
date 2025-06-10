@@ -1,8 +1,7 @@
-package com.scriptglance.ui.screen.presentation.userDashboard
+package com.scriptglance.ui.screen.userDashboard
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -18,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -34,6 +34,7 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -54,15 +55,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.scriptglance.R
 import com.scriptglance.data.model.presentation.PresentationItem
 import com.scriptglance.ui.common.components.AppTextField
 import com.scriptglance.ui.common.components.BeigeButton
 import com.scriptglance.ui.common.components.GrayButton
+import com.scriptglance.ui.common.components.GreenButton
 import com.scriptglance.ui.common.components.RedButton
 import com.scriptglance.ui.common.components.UserAvatar
 import com.scriptglance.ui.screen.profile.EditProfileDialog
-import com.scriptglance.ui.theme.Black
 import com.scriptglance.ui.theme.RedEA
 import com.scriptglance.ui.theme.White
 import com.scriptglance.ui.theme.WhiteEA
@@ -71,6 +75,9 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun UserDashboardScreenRoot(
     onPresentationClick: (Int) -> Unit,
+    onPurchasePremiumClick: () -> Unit,
+    onManageSubscriptionClick: () -> Unit,
+    onChatClick: () -> Unit,
     onLogout: () -> Unit,
 ) {
     val viewModel: UserDashboardViewModel = hiltViewModel()
@@ -79,20 +86,31 @@ fun UserDashboardScreenRoot(
     var editProfileDialogVisible by remember { mutableStateOf(false) }
     var logoutDialogVisible by remember { mutableStateOf(false) }
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.onScreenResumed()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose {
+            lifecycleOwner.lifecycle.removeObserver(observer)
+        }
+    }
+
     LaunchedEffect(state.createdPresentationId) {
         state.createdPresentationId?.let {
             onPresentationClick(it)
         }
     }
 
-    LaunchedEffect(true) {
-        viewModel.onRefresh()
-    }
-
 
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .statusBarsPadding()
             .background(WhiteEA)
     ) {
         UserDashboardScreen(
@@ -104,6 +122,9 @@ fun UserDashboardScreenRoot(
             onSortChange = viewModel::onSortChange,
             onLoadMore = viewModel::loadMorePresentations,
             onCreatePresentation = viewModel::createPresentation,
+            onPurchasePremiumClick = onPurchasePremiumClick,
+            onManageSubscriptionClick = onManageSubscriptionClick,
+            onChatClick = onChatClick,
             onLogoutClick = { logoutDialogVisible = true },
         )
         if (filtersDialogVisible) {
@@ -171,7 +192,10 @@ fun UserDashboardScreen(
     onEditProfileClick: () -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onSortChange: (PresentationSort) -> Unit,
+    onPurchasePremiumClick: () -> Unit,
+    onManageSubscriptionClick: () -> Unit,
     onLoadMore: () -> Unit,
+    onChatClick: () -> Unit,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -211,13 +235,35 @@ fun UserDashboardScreen(
                     .padding(bottom = 20.dp)
             ) {
                 Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Image(
                             painter = painterResource(id = R.drawable.logo),
                             contentDescription = stringResource(R.string.dashboard_logo_content_description),
                             modifier = Modifier.height(36.dp)
                         )
+
+                        Spacer(modifier = Modifier.weight(1f))
                     }
+                    Spacer(Modifier.height(10.dp))
+
+                    GreenButton(
+                        label = if (state.userProfile?.hasPremium == true) {
+                            stringResource(R.string.manage_subscription)
+                        } else {
+                            stringResource(R.string.buy_premium)
+                        },
+                        onClick = {
+                            if (state.userProfile?.hasPremium == true) {
+                                onManageSubscriptionClick()
+                            } else {
+                                onPurchasePremiumClick()
+                            }
+                        }
+                    )
+
                     Spacer(Modifier.height(24.dp))
                     Text(
                         text = stringResource(R.string.greeting_format, userFirstName),
@@ -249,13 +295,19 @@ fun UserDashboardScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
+                    ChatButton(
+                        unreadCount = state.chatUnreadCount,
+                        onClick = onChatClick
+                    )
+
                     UserAvatar(
                         avatarUrl = state.userProfile?.avatar,
                         firstName = state.userProfile?.firstName,
                         lastName = state.userProfile?.lastName,
-                        size = 48.dp,
+                        size = 40.dp,
                         modifier = Modifier.clickable { onEditProfileClick() }
                     )
+
                     Box(
                         modifier = Modifier
                             .size(40.dp)
@@ -272,6 +324,7 @@ fun UserDashboardScreen(
                 }
             }
         }
+
 
 
         item {
@@ -719,6 +772,46 @@ fun PresentationListItem(
         }
     }
 }
+
+@Composable
+private fun ChatButton(
+    unreadCount: Int,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .size(40.dp)
+            .background(Color.White, CircleShape)
+            .clickable(onClick = onClick),
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_chat),
+            contentDescription = stringResource(R.string.support_chat),
+            modifier = Modifier.size(25.dp),
+            tint = Color.Unspecified
+        )
+
+        if (unreadCount > 0) {
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .size(18.dp)
+                    .background(RedEA, CircleShape),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = if (unreadCount > 99) "99+" else unreadCount.toString(),
+                    color = Color.White,
+                    fontSize = 10.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
+}
+
 
 fun formatDate(dateStr: String?, fallback: String): String {
     return if (dateStr.isNullOrBlank()) fallback

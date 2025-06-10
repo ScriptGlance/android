@@ -1,6 +1,6 @@
 package com.scriptglance.data.repository
 
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.data.model.presentation.AcceptInvitationsResponse
 import com.scriptglance.data.model.presentation.GetPresentationsParams
 import com.scriptglance.data.model.presentation.InvitationResponse
@@ -12,6 +12,7 @@ import com.scriptglance.data.model.presentation.PresentationStats
 import com.scriptglance.data.model.presentation.PresentationStructure
 import com.scriptglance.data.model.presentation.PresentationsConfig
 import com.scriptglance.data.model.presentation.UpdatePresentationRequest
+import com.scriptglance.data.model.teleprompter.PresentationPartFull
 import com.scriptglance.data.remote.ApiService
 import com.scriptglance.domain.repository.PresentationsRepository
 import com.scriptglance.utils.apiFlow
@@ -62,6 +63,11 @@ class PresentationsRepositoryImpl @Inject constructor(
 
     override suspend fun getActivePresentation(token: String, presentationId: Int): ApiResult<PresentationActiveData?> =
         apiFlow { apiService.getActivePresentation(bearer(token), presentationId) }
+
+    override suspend fun getParts(token: String, presentationId: Int): ApiResult<List<PresentationPartFull>?> =
+        apiFlow {
+            apiService.getParts(bearer(token), presentationId)
+        }
 
     private fun bearer(token: String) = "Bearer $token"
 }

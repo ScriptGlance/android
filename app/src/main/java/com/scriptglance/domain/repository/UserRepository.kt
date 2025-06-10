@@ -1,6 +1,6 @@
 package com.scriptglance.domain.repository
 
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.data.model.profile.User
 import com.scriptglance.data.model.profile.UserProfileUpdateData
 

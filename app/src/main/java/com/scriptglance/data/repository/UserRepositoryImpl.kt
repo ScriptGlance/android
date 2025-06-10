@@ -1,6 +1,6 @@
 package com.scriptglance.data.repository
 
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.data.model.profile.User
 import com.scriptglance.data.model.profile.UserProfileUpdateData
 import com.scriptglance.data.remote.ApiService
@@ -35,6 +35,9 @@ class UserRepositoryImpl @Inject constructor(
         }
         data.password?.let {
             fields["password"] = it.toRequestBody("text/plain".toMediaTypeOrNull())
+        }
+        data.fcmToken?.let {
+            fields["fcm_token"] = it.toRequestBody("text/plain".toMediaTypeOrNull())
         }
         data.avatar?.let { file ->
             if (file.exists()) {

@@ -2,8 +2,8 @@ package com.scriptglance.utils
 
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.scriptglance.data.model.ApiResponse
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResponse
+import com.scriptglance.data.model.api.ApiResult
 import retrofit2.Response
 import java.io.IOException
 
