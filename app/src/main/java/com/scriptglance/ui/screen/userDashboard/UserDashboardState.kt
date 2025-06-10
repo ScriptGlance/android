@@ -1,4 +1,4 @@
-package com.scriptglance.ui.screen.presentation.userDashboard
+package com.scriptglance.ui.screen.userDashboard
 
 import com.scriptglance.data.model.presentation.PresentationItem
 import com.scriptglance.data.model.presentation.PresentationStats
@@ -16,4 +16,5 @@ data class UserDashboardState(
     val offset: Int = 0,
     val canLoadMore: Boolean = true,
     val createdPresentationId: Int? = null,
+    val chatUnreadCount: Int = 0
 )

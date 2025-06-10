@@ -8,7 +8,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
-private val Context.dataStore by preferencesDataStore(name = "auth_prefs")
+private val Context.authDataStore by preferencesDataStore(name = "auth_prefs")
 
 class AuthDataStore(private val context: Context) {
     companion object {
@@ -18,37 +18,37 @@ class AuthDataStore(private val context: Context) {
     }
 
     suspend fun saveToken(token: String) {
-        context.dataStore.edit { prefs ->
+        context.authDataStore.edit { prefs ->
             prefs[TOKEN_KEY] = token
         }
     }
 
     suspend fun getToken(): String? {
-        return context.dataStore.data
+        return context.authDataStore.data
             .map { it[TOKEN_KEY] }
             .first()
     }
 
     suspend fun removeToken() {
-        context.dataStore.edit { prefs ->
+        context.authDataStore.edit { prefs ->
             prefs.remove(TOKEN_KEY)
         }
     }
 
     suspend fun saveConfirmationInfo(email: String) {
-        context.dataStore.edit { prefs ->
+        context.authDataStore.edit { prefs ->
             prefs[CONFIRM_EMAIL_KEY] = email
             prefs[CONFIRM_SENT_AT_KEY] = System.currentTimeMillis()
         }
     }
 
     suspend fun getConfirmationInfo(): Pair<String?, Long?> {
-        val prefs = context.dataStore.data.first()
+        val prefs = context.authDataStore.data.first()
         return prefs[CONFIRM_EMAIL_KEY] to prefs[CONFIRM_SENT_AT_KEY]
     }
 
     suspend fun clearConfirmationInfo() {
-        context.dataStore.edit { prefs ->
+        context.authDataStore.edit { prefs ->
             prefs.remove(CONFIRM_EMAIL_KEY)
             prefs.remove(CONFIRM_SENT_AT_KEY)
         }

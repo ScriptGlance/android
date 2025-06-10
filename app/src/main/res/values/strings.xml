@@ -162,4 +162,99 @@
     <string name="logout">Вихід</string>
     <string name="logout_confirm_message">Ви точно хочете вийти з акаунту?</string>
 
+    <string name="teleprompter_loading">Завантаження телесуфлера…</string>
+    <string name="error_occurred">Виникла помилка</string>
+    <string name="go_back">Повернутися</string>
+    <string name="screen_connection_lost">Втрачено зв\'язок із сервером. Відновлюємо підключення…</string>
+    <string name="stop">Зупинити</string>
+    <string name="start">Почати</string>
+    <string name="zoom_out">Зменшити</string>
+    <string name="zoom_in">Збільшити</string>
+    <string name="exit">Вийти</string>
+
+    <string name="speech_api_connection_failed">Не вдалося підключитися до сервісу розпізнавання мовлення</string>
+    <string name="speech_api_network_description">На жаль, Web Speech API не може підключитись до сервісу розпізнавання.\nЦе може бути обмеженням вашого пристрою або мережі.</string>
+    <string name="speech_api_permission_denied">Доступ до мікрофона заблоковано</string>
+    <string name="speech_api_permission_description">Будь ласка, надайте дозвіл на використання мікрофона в налаштуваннях вашого пристрою.</string>
+    <string name="speech_api_not_available">Розпізнавання мовлення недоступне</string>
+    <string name="speech_api_not_available_description">На жаль, ваш пристрій не підтримує або блокує розпізнавання мовлення.</string>
+    <string name="try_again">Спробувати знову</string>
+
+    <string name="presentation_paused">Виступ призупинено</string>
+    <string name="participant_missing">Учасник %s наразі відсутній.</string>
+    <string name="participant_not_responding">Учасник %s не відповідає.</string>
+    <string name="choose_another_reader">Оберіть іншого читача частини «%s»</string>
+    <string name="confirm">Підтвердити</string>
+    <string name="reading_confirmation_title">Підтвердження готовності</string>
+    <string name="reading_confirmation_assigned">Вас обрано читачем частини «%s»</string>
+    <string name="reading_confirmation_paused">Ви зупинилися на частині «%s»</string>
+    <string name="confirmation_time_left">Час для підтвердження: %dс</string>
+    <string name="start_from_beginning">Почати з початку</string>
+    <string name="continue_reading">Продовжити</string>
+    <string name="presentation_starting_not_owner_error">Тільки власник презентації може керувати відтворенням</string>
+    <string name="auth_error">Помилка авторизації</string>
+    <string name="error_stopping_presentation">Не вдалося зупинити презентацію</string>
+    <string name="error_starting_presentation">Не вдалося запустити презентацію</string>
+    <string name="error_managing_presentation">Виникла помилка при керуванні презентацією</string>
+    <string name="error_reassinging_part">Не вдалося перепризначити частину</string>
+    <string name="error_confirmation">Не вдалося підтвердити готовність</string>
+
+    <string name="get_scriptglance_premium">Отримайте ScriptGlance преміум</string>
+    <string name="subscribe_to_unlock_all_features">Підпишіться, щоб розблокувати всі можливості</string>
+    <string name="free">Безкоштовно</string>
+    <string name="premium_version">Преміум-версія</string>
+    <string name="watermark">Водяний знак</string>
+    <string name="recorded_video_editing">Монтаж записаних відео</string>
+    <string name="no_restrictions">Жодних обмежень</string>
+    <string name="no_watermark">Без водяного знаку</string>
+    <string name="buy_premium">Купити преміум</string>
+    <string name="manage_subscription">Керувати підпискою</string>
+    <string name="payment">Оплата</string>
+    <string name="premium_purchase_title">Преміум</string>
+    <string name="video_duration_limit_dynamic">Обмеження тривалості відео до %s</string>
+    <string name="max_participants_dynamic">Обмеження на %d учасника спільного виступу</string>
+    <string name="max_video_recordings_dynamic">Обмеження на запис %d відео</string>
+    <string name="price_per_month_dynamic">%s / місяць</string>
+
+    <string name="premium_subscription">Преміум-підписка</string>
+    <string name="status_label">Стан: %s</string>
+    <string name="next_payment_label">Наступна оплата: %s</string>
+    <string name="payment_card">Платіжна картка</string>
+    <string name="transactions">Транзакції</string>
+    <string name="cancel_subscription">Скасувати підписку</string>
+    <string name="change_card">Змінити</string>
+    <string name="loading_payment_card">Завантаження даних картки…</string>
+    <string name="no_transactions">Немає транзакцій</string>
+
+    <string name="status_active">Активна</string>
+    <string name="status_past_due">Прострочена</string>
+    <string name="status_cancelled">Скасована</string>
+    <string name="status_created">Створена</string>
+
+    <string name="transaction_success">Успішно</string>
+    <string name="transaction_processing">Обробляється</string>
+    <string name="transaction_failure">Недостатньо коштів</string>
+    <string name="transaction_unknown">Невідомо</string>
+
+    <string name="cancel_subscription_title">Скасування підписки</string>
+    <string name="cancel_subscription_message">Ви впевнені, що хочете скасувати підписку?</string>
+    <string name="keep_subscription">Залишити</string>
+    <string name="hours">%1$d г</string>
+    <string name="hours_minutes">%1$d г %2$d хв</string>
+    <string name="minutes">%1$d хв</string>
+
+    <string name="support">Підтримка</string>
+    <string name="enter_message">Введіть повідомлення…</string>
+    <string name="send">Відправити</string>
+    <string name="loading">Завантаження…</string>
+    <string name="no_messages_yet">У вас ще немає повідомлень</string>
+    <string name="support_chat">Чат з підтримкою</string>
+
+    <string name="loading_more">Завантаження…</string>
+    <string name="loading_chat">Завантаження чату…</string>
+    <string name="connection_error">Помилка з\'єднання</string>
+    <string name="check_connection">Перевірте інтернет-з\'єднання та спробуйте знову</string>
+    <string name="retry">Повторити</string>
+    <string name="notification_channel_name">Повідомлення</string>
+
 </resources>

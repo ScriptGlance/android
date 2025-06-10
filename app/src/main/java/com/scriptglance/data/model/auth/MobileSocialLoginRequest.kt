@@ -1,4 +1,4 @@
-package com.scriptglance.data.model
+package com.scriptglance.data.model.auth
 
 data class MobileSocialLoginRequest(
     val provider: String,

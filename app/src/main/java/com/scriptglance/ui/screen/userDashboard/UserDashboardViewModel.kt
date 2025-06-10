@@ -1,13 +1,17 @@
-package com.scriptglance.ui.screen.presentation.userDashboard
+package com.scriptglance.ui.screen.userDashboard
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.data.model.presentation.GetPresentationsParams
+import com.scriptglance.data.model.profile.UserProfileUpdateData
+import com.scriptglance.domain.manager.socket.ChatSocketManager
 import com.scriptglance.domain.repository.AuthRepository
+import com.scriptglance.domain.repository.ChatRepository
 import com.scriptglance.domain.repository.PresentationsRepository
 import com.scriptglance.domain.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.socket.emitter.Emitter
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -37,20 +41,56 @@ enum class PresentationSort {
 class UserDashboardViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val presentationsRepository: PresentationsRepository,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val chatRepository: ChatRepository,
+    private val chatSocketManager: ChatSocketManager
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(UserDashboardState(isLoading = true))
     val state: StateFlow<UserDashboardState> = _state.asStateFlow()
 
     private var currentToken: String? = null
+    private var newMessageListener: Emitter.Listener? = null
+    private var chatClosedListener: Emitter.Listener? = null
+    private var isSocketSetupInitialized = false
+
 
     init {
         viewModelScope.launch {
             currentToken = authRepository.getToken()
             if (currentToken.isNullOrBlank()) {
                 _state.update { it.copy(isLoading = false, userProfile = null) }
+            } else {
+                setupChatSocket()
             }
+        }
+    }
+
+    fun onScreenResumed() {
+        viewModelScope.launch {
+            setupChatSocket()
+            refresh()
+        }
+    }
+
+    private suspend fun setupChatSocket() {
+        try {
+            chatSocketManager.connect()
+            chatSocketManager.onConnect(chatSocketManager::joinUserChat)
+
+            newMessageListener?.let { chatSocketManager.offNewMessage(it) }
+            chatClosedListener?.let { chatSocketManager.offChatClosed(it) }
+
+            newMessageListener = chatSocketManager.onNewMessage { event ->
+                fetchUnreadCount()
+            }
+
+            chatClosedListener = chatSocketManager.onChatClosed {
+                _state.update { it.copy(chatUnreadCount = 0) }
+            }
+
+            isSocketSetupInitialized = true
+        } catch (_: Exception) {
         }
     }
 
@@ -59,7 +99,24 @@ class UserDashboardViewModel @Inject constructor(
         _state.update { it.copy(isLoading = true) }
         fetchUserProfile(token)
         fetchStats(token)
+        fetchUnreadCount()
         refreshPresentations()
+    }
+
+    private fun fetchUnreadCount() {
+        val token = currentToken ?: return
+
+        viewModelScope.launch {
+            when (val result = chatRepository.getUserActiveUnreadCount(token)) {
+                is ApiResult.Success -> {
+                    _state.update { it.copy(chatUnreadCount = result.data?.unreadCount ?: 0) }
+                }
+
+                is ApiResult.Error -> {
+
+                }
+            }
+        }
     }
 
     fun fetchUserProfile(token: String = currentToken ?: "") {
@@ -70,14 +127,11 @@ class UserDashboardViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = userRepository.getProfile(token)) {
                 is ApiResult.Success -> _state.update {
-                    it.copy(
-                        userProfile = result.data
-                    )
+                    it.copy(userProfile = result.data)
                 }
+
                 is ApiResult.Error -> _state.update {
-                    it.copy(
-                        userProfile = null
-                    )
+                    it.copy(userProfile = null)
                 }
             }
         }
@@ -91,17 +145,23 @@ class UserDashboardViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = presentationsRepository.getStats(token)) {
                 is ApiResult.Success -> _state.update {
-                    it.copy(
-                        stats = result.data
-                    )
+                    it.copy(stats = result.data)
                 }
+
                 is ApiResult.Error -> _state.update { it.copy(stats = null) }
             }
         }
     }
 
     fun refreshPresentations() {
-        _state.update { it.copy(presentations = emptyList(), offset = 0, canLoadMore = true, isLoading = false) }
+        _state.update {
+            it.copy(
+                presentations = emptyList(),
+                offset = 0,
+                canLoadMore = true,
+                isLoading = false
+            )
+        }
         loadMorePresentations()
     }
 
@@ -136,6 +196,7 @@ class UserDashboardViewModel @Inject constructor(
                         )
                     }
                 }
+
                 is ApiResult.Error -> _state.update {
                     it.copy(isLoading = false, canLoadMore = false)
                 }
@@ -151,6 +212,7 @@ class UserDashboardViewModel @Inject constructor(
                 is ApiResult.Success -> {
                     _state.update { it.copy(createdPresentationId = result.data?.presentationId) }
                 }
+
                 is ApiResult.Error -> {
                     _state.update { it.copy(isLoading = false) }
                 }
@@ -173,15 +235,17 @@ class UserDashboardViewModel @Inject constructor(
         refreshPresentations()
     }
 
-    fun onRefresh() {
-        _state.update { it.copy(
-            userProfile = null,
-            stats = null,
-            presentations = emptyList(),
-            offset = 0,
-            canLoadMore = true,
-            isLoading = true
-        )}
+    private fun refresh() {
+        _state.update {
+            it.copy(
+                userProfile = null,
+                stats = null,
+                presentations = emptyList(),
+                offset = 0,
+                canLoadMore = true,
+                isLoading = true
+            )
+        }
         fetchAll()
     }
 
@@ -219,7 +283,21 @@ class UserDashboardViewModel @Inject constructor(
 
     fun logout() {
         MainScope().launch {
+            currentToken?.let {
+                userRepository.updateProfile(
+                    it,
+                    UserProfileUpdateData(fcmToken = "")
+                )
+            }
             authRepository.removeToken()
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        newMessageListener?.let { chatSocketManager.offNewMessage(it) }
+        chatClosedListener?.let { chatSocketManager.offChatClosed(it) }
+        chatSocketManager.disconnect()
+        isSocketSetupInitialized = false
     }
 }

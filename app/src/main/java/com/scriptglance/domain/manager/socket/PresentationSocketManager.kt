@@ -1,7 +1,7 @@
 package com.scriptglance.domain.manager.socket
 
 import android.util.Log
-import com.scriptglance.data.model.PresentationEvent
+import com.scriptglance.data.model.presentation.PresentationEvent
 import com.scriptglance.domain.repository.AuthRepository
 import io.socket.emitter.Emitter
 import org.json.JSONObject

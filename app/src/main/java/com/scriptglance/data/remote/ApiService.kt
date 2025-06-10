@@ -1,7 +1,7 @@
 package com.scriptglance.data.remote
 
-import com.scriptglance.data.model.ApiResponse
-import com.scriptglance.data.model.MobileSocialLoginRequest
+import com.scriptglance.data.model.api.ApiResponse
+import com.scriptglance.data.model.auth.MobileSocialLoginRequest
 import com.scriptglance.data.model.auth.ForgotPasswordRequest
 import com.scriptglance.data.model.auth.LoginRequest
 import com.scriptglance.data.model.auth.RegisterRequest
@@ -9,6 +9,12 @@ import com.scriptglance.data.model.auth.ResetPasswordRequest
 import com.scriptglance.data.model.auth.SendVerificationEmailRequest
 import com.scriptglance.data.model.auth.TokenResponse
 import com.scriptglance.data.model.auth.VerifyEmailRequest
+import com.scriptglance.data.model.chat.ChatMessage
+import com.scriptglance.data.model.chat.SendUserActiveChatMessageRequest
+import com.scriptglance.data.model.chat.UnreadCountData
+import com.scriptglance.data.model.payment.CheckoutResponse
+import com.scriptglance.data.model.payment.SubscriptionData
+import com.scriptglance.data.model.payment.Transaction
 import com.scriptglance.data.model.presentation.AcceptInvitationsResponse
 import com.scriptglance.data.model.presentation.InvitationResponse
 import com.scriptglance.data.model.presentation.Participant
@@ -20,6 +26,11 @@ import com.scriptglance.data.model.presentation.PresentationStructure
 import com.scriptglance.data.model.presentation.PresentationsConfig
 import com.scriptglance.data.model.presentation.UpdatePresentationRequest
 import com.scriptglance.data.model.profile.User
+import com.scriptglance.data.model.teleprompter.ConfirmActiveReaderRequest
+import com.scriptglance.data.model.teleprompter.ParticipantVideoCount
+import com.scriptglance.data.model.teleprompter.PresentationPartFull
+import com.scriptglance.data.model.teleprompter.SetActiveReaderRequest
+import com.scriptglance.data.model.teleprompter.SetRecordingModeRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Response
@@ -151,4 +162,99 @@ interface ApiService {
         @PartMap fields: Map<String, @JvmSuppressWildcards RequestBody>,
         @Part parts: List<MultipartBody.Part>
     ): Response<ApiResponse<User?>>
+
+    @POST("api/presentations/{presentationId}/start")
+    suspend fun startPresentation(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int
+    ): Response<Unit>
+
+    @POST("api/presentations/{presentationId}/stop")
+    suspend fun stopPresentation(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int
+    ): Response<Unit>
+
+    @PUT("api/presentations/{presentationId}/recording-mode")
+    suspend fun setRecordingMode(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int,
+        @Body request: SetRecordingModeRequest
+    ): Response<Unit>
+
+    @GET("api/presentations/{presentationId}/participants/videos-left")
+    suspend fun getParticipantsVideosLeft(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int
+    ): Response<ApiResponse<List<ParticipantVideoCount>?>>
+
+    @PUT("api/presentations/{presentationId}/active/reader")
+    suspend fun setActiveReader(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int,
+        @Body request: SetActiveReaderRequest
+    ): Response<Unit>
+
+    @POST("api/presentations/{presentationId}/active/reader/confirm")
+    suspend fun confirmActiveReader(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int,
+        @Body request: ConfirmActiveReaderRequest
+    ): Response<Unit>
+
+    @GET("api/presentations/{presentationId}/parts")
+    suspend fun getParts(
+        @Header("Authorization") token: String,
+        @Path("presentationId") presentationId: Int
+    ): Response<ApiResponse<List<PresentationPartFull>?>>
+
+    @POST("api/payments/subscription/checkout")
+    suspend fun createSubscriptionCheckout(
+        @Header("Authorization") token: String
+    ): Response<ApiResponse<CheckoutResponse?>>
+
+    @GET("api/payments/subscription")
+    suspend fun getSubscription(
+        @Header("Authorization") token: String
+    ): Response<ApiResponse<SubscriptionData?>>
+
+    @DELETE("api/payments/subscription")
+    suspend fun cancelSubscription(
+        @Header("Authorization") token: String
+    ): Response<Unit>
+
+    @GET("api/payments/subscription/transactions")
+    suspend fun getTransactions(
+        @Header("Authorization") token: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): Response<ApiResponse<List<Transaction>?>>
+
+    @POST("api/payments/subscription/card/update")
+    suspend fun updateCard(
+        @Header("Authorization") token: String
+    ): Response<ApiResponse<CheckoutResponse?>>
+
+    @GET("api/chat/user/active")
+    suspend fun getUserActiveChatMessages(
+        @Header("Authorization") token: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): Response<ApiResponse<List<ChatMessage>?>>
+
+    @POST("api/chat/user/active")
+    suspend fun sendUserActiveChatMessage(
+        @Header("Authorization") token: String,
+        @Body request: SendUserActiveChatMessageRequest
+    ): Response<ApiResponse<ChatMessage?>>
+
+    @GET("api/chat/user/active/unread-count")
+    suspend fun getUserActiveUnreadCount(
+        @Header("Authorization") token: String
+    ): Response<ApiResponse<UnreadCountData?>>
+
+    @PUT("api/chat/user/active/read")
+    suspend fun markUserActiveChatAsRead(
+        @Header("Authorization") token: String
+    ): Response<Unit>
 }
