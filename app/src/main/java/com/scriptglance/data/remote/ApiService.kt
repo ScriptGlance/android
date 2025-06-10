@@ -9,6 +9,9 @@ import com.scriptglance.data.model.auth.ResetPasswordRequest
 import com.scriptglance.data.model.auth.SendVerificationEmailRequest
 import com.scriptglance.data.model.auth.TokenResponse
 import com.scriptglance.data.model.auth.VerifyEmailRequest
+import com.scriptglance.data.model.chat.ChatMessage
+import com.scriptglance.data.model.chat.SendUserActiveChatMessageRequest
+import com.scriptglance.data.model.chat.UnreadCountData
 import com.scriptglance.data.model.payment.CheckoutResponse
 import com.scriptglance.data.model.payment.SubscriptionData
 import com.scriptglance.data.model.payment.Transaction
@@ -231,4 +234,27 @@ interface ApiService {
     suspend fun updateCard(
         @Header("Authorization") token: String
     ): Response<ApiResponse<CheckoutResponse?>>
+
+    @GET("api/chat/user/active")
+    suspend fun getUserActiveChatMessages(
+        @Header("Authorization") token: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): Response<ApiResponse<List<ChatMessage>?>>
+
+    @POST("api/chat/user/active")
+    suspend fun sendUserActiveChatMessage(
+        @Header("Authorization") token: String,
+        @Body request: SendUserActiveChatMessageRequest
+    ): Response<ApiResponse<ChatMessage?>>
+
+    @GET("api/chat/user/active/unread-count")
+    suspend fun getUserActiveUnreadCount(
+        @Header("Authorization") token: String
+    ): Response<ApiResponse<UnreadCountData?>>
+
+    @PUT("api/chat/user/active/read")
+    suspend fun markUserActiveChatAsRead(
+        @Header("Authorization") token: String
+    ): Response<Unit>
 }
