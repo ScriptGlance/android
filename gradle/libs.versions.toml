@@ -1,5 +1,6 @@
 [versions]
 agp = "8.6.0"
+firebaseBom = "33.14.0"
 kotlin = "2.0.21"
 coreKtx = "1.16.0"
 junit = "4.13.2"
@@ -16,9 +17,13 @@ datastore = "1.1.7"
 chucker = "4.0.0"
 glideCompose = "1.0.0-beta01"
 socketIo = "2.1.0"
+accompanist = "0.37.3"
+vosk = "0.3.47"
+pytorch_android = "1.12.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -46,6 +51,13 @@ google-signin = { group = "com.google.android.gms", name = "play-services-auth",
 facebook-login = { group = "com.facebook.android", name = "facebook-login", version = "latest.release" }
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glideCompose" }
 socket-io = { group = "io.socket", name = "socket.io-client", version.ref = "socketIo" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx"}
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+vosk-android = { group = "com.alphacephei", name = "vosk-android", version.ref = "vosk" }
+pytorch-android-lite = { group = "org.pytorch", name = "pytorch_android_lite", version.ref = "pytorch_android" }
+pytorch-android-torchvision-lite = { group = "org.pytorch", name = "pytorch_android_torchvision_lite", version.ref = "pytorch_android" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

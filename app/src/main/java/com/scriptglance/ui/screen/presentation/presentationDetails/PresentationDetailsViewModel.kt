@@ -5,8 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.scriptglance.R
-import com.scriptglance.data.model.ApiResult
-import com.scriptglance.data.model.PresentationEvent
+import com.scriptglance.data.model.api.ApiResult
+import com.scriptglance.data.model.presentation.PresentationEvent
 import com.scriptglance.data.model.presentation.*
 import com.scriptglance.domain.manager.socket.PresentationSocketManager
 import com.scriptglance.domain.repository.AuthRepository
@@ -39,18 +39,54 @@ class PresentationDetailsViewModel @Inject constructor(
     private var presentationId: Int = 0
     private var token: String? = null
     private var presentationEventListener: Emitter.Listener? = null
+    private var isInitialized = false
 
     init {
         presentationId = savedStateHandle.get<Int>("presentationId") ?: 0
+        initializeData()
+    }
+
+    private fun initializeData() {
         viewModelScope.launch {
             token = authRepository.getToken()
             if (!token.isNullOrEmpty()) {
                 fetchProfile()
                 fetchPresentationData()
                 setupSocketListener()
+                isInitialized = true
             } else {
                 _state.update { it.copy(isLoading = false, error = true) }
             }
+        }
+    }
+
+    fun onScreenResumed() {
+        viewModelScope.launch {
+            // Завжди перезавантажуємо дані при поверненні
+            if (isInitialized) {
+                _state.update { it.copy(isLoading = true) }
+                fetchPresentationData()
+                reconnectSocket()
+            }
+        }
+    }
+
+    private suspend fun reconnectSocket() {
+        try {
+            // Відключаємося від попереднього з'єднання
+            presentationEventListener?.let {
+                presentationSocketManager.offPresentationEvent(it)
+            }
+            presentationSocketManager.disconnect()
+
+            // Невелика затримка перед повторним підключенням
+            kotlinx.coroutines.delay(200)
+
+            // Повторно підключаємося
+            setupSocketListener()
+        } catch (e: Exception) {
+            // Логування помилки
+            android.util.Log.e("PresentationDetailsVM", "Error reconnecting socket: ${e.message}")
         }
     }
 
@@ -343,6 +379,7 @@ class PresentationDetailsViewModel @Inject constructor(
         presentationEventListener?.let {
             presentationSocketManager.offPresentationEvent(it)
         }
+        presentationSocketManager.disconnect()
     }
 
     fun formatDuration(

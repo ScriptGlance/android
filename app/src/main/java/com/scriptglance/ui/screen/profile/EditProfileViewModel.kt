@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.scriptglance.data.model.ApiResult
+import com.scriptglance.data.model.api.ApiResult
 import com.scriptglance.data.model.profile.UserProfileUpdateData
 import com.scriptglance.domain.repository.AuthRepository
 import com.scriptglance.domain.repository.UserRepository
