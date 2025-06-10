@@ -4,6 +4,8 @@ import com.scriptglance.domain.repository.AuthRepository
 import com.scriptglance.data.repository.AuthRepositoryImpl
 import com.scriptglance.data.repository.PresentationsRepositoryImpl
 import com.scriptglance.domain.repository.PresentationsRepository
+import com.scriptglance.domain.repository.SubscriptionRepository
+import com.scriptglance.domain.repository.TeleprompterRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,5 +37,11 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun bindTeleprompterRepository(
         impl: com.scriptglance.data.repository.TeleprompterRepositoryImpl
-    ): com.scriptglance.domain.repository.TeleprompterRepository
+    ): TeleprompterRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSubscriptionRepository(
+        impl: com.scriptglance.data.repository.SubscriptionRepositoryImpl
+    ): SubscriptionRepository
 }
