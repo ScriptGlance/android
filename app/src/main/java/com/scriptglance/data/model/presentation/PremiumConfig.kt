@@ -9,6 +9,6 @@ data class PremiumConfig(
     val maxFreeParticipantsCount: Int,
     @SerializedName("max_free_video_count")
     val maxFreeVideoCount: Int,
-    @SerializedName("premium_recording_time_seconds")
+    @SerializedName("premium_price_cents")
     val premiumPriceCents: Int
 )

@@ -9,6 +9,9 @@ import com.scriptglance.data.model.auth.ResetPasswordRequest
 import com.scriptglance.data.model.auth.SendVerificationEmailRequest
 import com.scriptglance.data.model.auth.TokenResponse
 import com.scriptglance.data.model.auth.VerifyEmailRequest
+import com.scriptglance.data.model.payment.CheckoutResponse
+import com.scriptglance.data.model.payment.SubscriptionData
+import com.scriptglance.data.model.payment.Transaction
 import com.scriptglance.data.model.presentation.AcceptInvitationsResponse
 import com.scriptglance.data.model.presentation.InvitationResponse
 import com.scriptglance.data.model.presentation.Participant
@@ -201,4 +204,31 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("presentationId") presentationId: Int
     ): Response<ApiResponse<List<PresentationPartFull>?>>
+
+    @POST("api/payments/subscription/checkout")
+    suspend fun createSubscriptionCheckout(
+        @Header("Authorization") token: String
+    ): Response<ApiResponse<CheckoutResponse?>>
+
+    @GET("api/payments/subscription")
+    suspend fun getSubscription(
+        @Header("Authorization") token: String
+    ): Response<ApiResponse<SubscriptionData?>>
+
+    @DELETE("api/payments/subscription")
+    suspend fun cancelSubscription(
+        @Header("Authorization") token: String
+    ): Response<Unit>
+
+    @GET("api/payments/subscription/transactions")
+    suspend fun getTransactions(
+        @Header("Authorization") token: String,
+        @Query("offset") offset: Int,
+        @Query("limit") limit: Int
+    ): Response<ApiResponse<List<Transaction>?>>
+
+    @POST("api/payments/subscription/card/update")
+    suspend fun updateCard(
+        @Header("Authorization") token: String
+    ): Response<ApiResponse<CheckoutResponse?>>
 }
