@@ -54,6 +54,7 @@ socket-io = { group = "io.socket", name = "socket.io-client", version.ref = "soc
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx"}
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx" }
 vosk-android = { group = "com.alphacephei", name = "vosk-android", version.ref = "vosk" }
 pytorch-android-lite = { group = "org.pytorch", name = "pytorch_android_lite", version.ref = "pytorch_android" }
 pytorch-android-torchvision-lite = { group = "org.pytorch", name = "pytorch_android_torchvision_lite", version.ref = "pytorch_android" }
