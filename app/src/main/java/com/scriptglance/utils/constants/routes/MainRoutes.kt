@@ -14,4 +14,5 @@ sealed class MainRoutes(val route: String) {
     }
     object PurchasePremium : MainRoutes("purchase_premium")
     object PremiumManagement : MainRoutes("premium_management")
+    object Chat : MainRoutes("chat")
 }
