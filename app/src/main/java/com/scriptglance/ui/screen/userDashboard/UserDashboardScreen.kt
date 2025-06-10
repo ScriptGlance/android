@@ -59,6 +59,7 @@ import com.scriptglance.data.model.presentation.PresentationItem
 import com.scriptglance.ui.common.components.AppTextField
 import com.scriptglance.ui.common.components.BeigeButton
 import com.scriptglance.ui.common.components.GrayButton
+import com.scriptglance.ui.common.components.GreenButton
 import com.scriptglance.ui.common.components.RedButton
 import com.scriptglance.ui.common.components.UserAvatar
 import com.scriptglance.ui.screen.profile.EditProfileDialog
@@ -70,6 +71,8 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun UserDashboardScreenRoot(
     onPresentationClick: (Int) -> Unit,
+    onPurchasePremiumClick: () -> Unit,
+    onManageSubscriptionClick: () -> Unit,
     onLogout: () -> Unit,
 ) {
     val viewModel: UserDashboardViewModel = hiltViewModel()
@@ -104,6 +107,8 @@ fun UserDashboardScreenRoot(
             onSortChange = viewModel::onSortChange,
             onLoadMore = viewModel::loadMorePresentations,
             onCreatePresentation = viewModel::createPresentation,
+            onPurchasePremiumClick = onPurchasePremiumClick,
+            onManageSubscriptionClick = onManageSubscriptionClick,
             onLogoutClick = { logoutDialogVisible = true },
         )
         if (filtersDialogVisible) {
@@ -171,6 +176,8 @@ fun UserDashboardScreen(
     onEditProfileClick: () -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onSortChange: (PresentationSort) -> Unit,
+    onPurchasePremiumClick: () -> Unit,
+    onManageSubscriptionClick: () -> Unit,
     onLoadMore: () -> Unit,
     onLogoutClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -211,13 +218,36 @@ fun UserDashboardScreen(
                     .padding(bottom = 20.dp)
             ) {
                 Column(Modifier.padding(start = 20.dp, end = 20.dp, top = 20.dp)) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         Image(
                             painter = painterResource(id = R.drawable.logo),
                             contentDescription = stringResource(R.string.dashboard_logo_content_description),
                             modifier = Modifier.height(36.dp)
                         )
+
+                        Spacer(modifier = Modifier.weight(1f))
+
                     }
+                    Spacer(Modifier.height(10.dp))
+
+                    GreenButton(
+                        label = if (state.userProfile?.hasPremium == true) {
+                            stringResource(R.string.manage_subscription)
+                        } else {
+                            stringResource(R.string.buy_premium)
+                        }, onClick = {
+                            if (state.userProfile?.hasPremium == true) {
+                                onManageSubscriptionClick()
+                            } else {
+                                onPurchasePremiumClick()
+                            }
+                        }
+                    )
+
+
                     Spacer(Modifier.height(24.dp))
                     Text(
                         text = stringResource(R.string.greeting_format, userFirstName),
@@ -272,6 +302,7 @@ fun UserDashboardScreen(
                 }
             }
         }
+
 
 
         item {
@@ -719,6 +750,7 @@ fun PresentationListItem(
         }
     }
 }
+
 
 fun formatDate(dateStr: String?, fallback: String): String {
     return if (dateStr.isNullOrBlank()) fallback

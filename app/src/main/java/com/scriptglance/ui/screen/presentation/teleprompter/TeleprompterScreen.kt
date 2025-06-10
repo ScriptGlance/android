@@ -74,26 +74,22 @@ private const val ICON_SIZE_DP = 24
 private const val SPACING_BETWEEN_AVATARS_DP = -8
 private const val MAX_VISIBLE_AVATARS = 3
 
-// Timing
 private const val DELAY_BEFORE_RECOGNITION_MS = 300L
 private const val WORD_SCROLL_DELAY_MS = 150L
 private const val SCROLL_RESET_DELAY_MS = 300L
 private const val SNACKBAR_TIMEOUT_MS = 3000L
 private const val COUNTDOWN_INTERVAL_MS = 1000L
 
-// Text sizes
 private const val MIN_FONT_SIZE = 0.8f
 private const val MAX_FONT_SIZE = 2.8f
 private const val DEFAULT_FONT_SIZE = 2.4f
 private const val ZOOM_STEP = 0.1f
 
-// Alpha values
 private const val GRADIENT_START_ALPHA = 0.9f
 private const val GRADIENT_END_ALPHA = 0f
 private const val HIGHLIGHT_BACKGROUND_ALPHA = 0.8f
 private const val SNACKBAR_BACKGROUND_ALPHA = 0.8f
 
-// Regex patterns
 val NEWLINE_WITH_SPACES_REGEX = "\n\\s{4,}".toRegex()
 
 @OptIn(ExperimentalPermissionsApi::class)

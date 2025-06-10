@@ -62,7 +62,6 @@ class PresentationDetailsViewModel @Inject constructor(
 
     fun onScreenResumed() {
         viewModelScope.launch {
-            // Завжди перезавантажуємо дані при поверненні
             if (isInitialized) {
                 _state.update { it.copy(isLoading = true) }
                 fetchPresentationData()
@@ -73,19 +72,15 @@ class PresentationDetailsViewModel @Inject constructor(
 
     private suspend fun reconnectSocket() {
         try {
-            // Відключаємося від попереднього з'єднання
             presentationEventListener?.let {
                 presentationSocketManager.offPresentationEvent(it)
             }
             presentationSocketManager.disconnect()
 
-            // Невелика затримка перед повторним підключенням
             kotlinx.coroutines.delay(200)
 
-            // Повторно підключаємося
             setupSocketListener()
         } catch (e: Exception) {
-            // Логування помилки
             android.util.Log.e("PresentationDetailsVM", "Error reconnecting socket: ${e.message}")
         }
     }

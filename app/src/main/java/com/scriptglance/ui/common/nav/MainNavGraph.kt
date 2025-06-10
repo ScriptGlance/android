@@ -6,6 +6,8 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.scriptglance.ui.screen.premium.management.PremiumManagementScreen
+import com.scriptglance.ui.screen.premium.purachase.PremiumPurchaseScreen
 import com.scriptglance.ui.screen.presentation.presentationDetails.PresentationDetailsScreen
 import com.scriptglance.ui.screen.presentation.teleprompter.TeleprompterScreen
 import com.scriptglance.ui.screen.userDashboard.UserDashboardScreenRoot
@@ -22,6 +24,12 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
                     navController.navigate(
                         MainRoutes.PresentationDetails.createRoute(it)
                     )
+                },
+                onPurchasePremiumClick = {
+                    navController.navigate(MainRoutes.PurchasePremium.route)
+                },
+                onManageSubscriptionClick = {
+                    navController.navigate(MainRoutes.PremiumManagement.route)
                 },
                 onLogout = {
                     navController.navigate("auth") {
@@ -57,6 +65,22 @@ fun NavGraphBuilder.mainNavGraph(navController: NavHostController) {
         ) { backStackEntry ->
             TeleprompterScreen(
                 goBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(MainRoutes.PurchasePremium.route) {
+            PremiumPurchaseScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable(MainRoutes.PremiumManagement.route) {
+            PremiumManagementScreen(
+                onNavigateBack = {
                     navController.popBackStack()
                 }
             )
