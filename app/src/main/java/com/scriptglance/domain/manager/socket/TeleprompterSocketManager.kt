@@ -13,7 +13,7 @@ class TeleprompterSocketManager @Inject constructor(
     authRepository: AuthRepository
 ) : BaseSocketManager(authRepository, SOCKET_PATH) {
 
-    override val TAG: String = "TeleprompterSocketMgr"
+    override val TAG: String = "TeleprompterSocketManager"
 
     companion object {
         private const val SOCKET_PATH = "/teleprompter"

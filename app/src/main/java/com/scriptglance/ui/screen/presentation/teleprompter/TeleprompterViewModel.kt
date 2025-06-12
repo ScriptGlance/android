@@ -1587,7 +1587,18 @@ class TeleprompterViewModel @Inject constructor(
         }
     }
 
-    fun onConfirmReading(isFromStartPosition: Boolean) {
+    fun onConfirmReading(isFromStartPosition: Boolean, sendRequest: Boolean) {
+        if (!sendRequest) {
+            _state.update { it.copy(readingConfirmationRequest = null) }
+            val isCurrentUserSpeaker = isCurrentUserSpeakerOfCurrentPart()
+            val isPresentationActive = _state.value.currentPresentationStartDate != null
+
+            if (isCurrentUserSpeaker && isPresentationActive && !isRecognizing) {
+                recognitionStartAttempted = false
+                initAndStartRecognition()
+            }
+            return
+        }
         viewModelScope.launch {
             try {
                 val currentToken = token ?: return@launch
