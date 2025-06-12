@@ -395,11 +395,15 @@ private fun ShowDialogs(
     }
 
     state.readingConfirmationRequest?.let { request ->
+        val currentUserId = state.userProfile?.userId ?: -1
         ReadingConfirmationDialog(
             request = request,
-            currentUserId = state.userProfile?.userId ?: -1,
+            currentUserId = currentUserId,
             onConfirm = { isFromStart ->
-                viewModel.onConfirmReading(isFromStart)
+                viewModel.onConfirmReading(
+                    isFromStart,
+                    sendRequest = request.part?.assigneeUserId != currentUserId
+                )
             },
             onDismiss = { viewModel.onDismissReadingConfirmationDialog() }
         )
@@ -1127,15 +1131,17 @@ fun ReadingConfirmationDialog(
         },
         confirmButton = {
             Column {
-                Button(
-                    onClick = { onConfirm(true) },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = Green5E)
-                ) {
-                    Text(stringResource(R.string.start_from_beginning))
+                if (request.part?.assigneeUserId != currentUserId) {
+                    Button(
+                        onClick = { onConfirm(true) },
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(containerColor = Green5E)
+                    ) {
+                        Text(stringResource(R.string.start_from_beginning))
+                    }
                 }
 
-                if (request.canContinueFromLastPosition) {
+                if (request.canContinueFromLastPosition || request.part?.assigneeUserId == currentUserId) {
                     Spacer(modifier = Modifier.height(8.dp))
                     OutlinedButton(
                         onClick = { onConfirm(false) },
